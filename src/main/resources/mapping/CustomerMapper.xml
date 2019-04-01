@@ -74,4 +74,7 @@
       </if>
     </trim>
   </insert>
+  <select id="select" resultType="com.ygy.model.Customer" parameterType="java.lang.Integer">
+      select  * from  customer WHERE c_id= #{cid,jdbcType=INTEGER}
+  </select>
 </mapper>

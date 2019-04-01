@@ -18,4 +18,5 @@ public interface CustomerMapper {
      * @mbggenerated Sat Mar 30 22:25:58 CST 2019
      */
     int insertSelective(Customer record);
+    Customer select(int cid);
 }
