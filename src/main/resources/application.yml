@@ -22,6 +22,11 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level: debug
+  file: my.log
+  path: G:\spring\Restaurant
+logging.level.com.ygy: DEBUG
+
+
 
 
 
