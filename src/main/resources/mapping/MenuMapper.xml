@@ -178,4 +178,7 @@
       menu_bitter = #{menuBitter,jdbcType=INTEGER}
     where menu_id = #{menuId,jdbcType=VARCHAR}
   </update>
+  <select id="selectByidandmid" resultType="com.ygy.model.Menu" parameterType="String">
+    select from  menu where menu_id=#{mid} and m_rid=#{rid};
+  </select>
 </mapper>

@@ -50,4 +50,6 @@ public interface MenuMapper {
      * @mbggenerated Sat Mar 30 22:25:58 CST 2019
      */
     int updateByPrimaryKey(Menu record);
+
+    Menu selectByidandmid(String rid,String mid);
 }

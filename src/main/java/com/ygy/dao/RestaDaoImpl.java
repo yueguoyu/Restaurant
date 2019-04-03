@@ -18,7 +18,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
  **/
 @SuppressWarnings("ALL")
 @Service
-public class restaDaoImpl  implements  restaDao{
+public class RestaDaoImpl implements RestaDao {
     @Autowired
     RestaurantMapper restaurantMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -59,6 +59,7 @@ public class restaDaoImpl  implements  restaDao{
             rest=true;
         }catch (Exception e){
             e.printStackTrace();
+            logger.error("deleRestaByid出错",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             rest=false;
         }
@@ -73,13 +74,14 @@ public class restaDaoImpl  implements  restaDao{
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean update(Restaurant restaurant) {
+    public boolean updateRest(Restaurant restaurant) {
         boolean rest=false;
         try {
             restaurantMapper.updateByPrimaryKey(restaurant);
             rest=true;
         }catch (Exception e){
             e.printStackTrace();
+            logger.error("updateRest出错",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             rest=false;
         }
@@ -100,6 +102,7 @@ public class restaDaoImpl  implements  restaDao{
             restaurant=restaurantMapper.selectByPrimaryKey( rid);
         }catch (Exception e){
            e.printStackTrace();
+            logger.error("selectByid出错",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return restaurant;

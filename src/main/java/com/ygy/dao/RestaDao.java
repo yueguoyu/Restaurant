@@ -5,7 +5,7 @@ import com.ygy.model.Restaurant;
     * @Author: ygy
     * @Date: 2019/4/2
     */
-public interface restaDao {
+public interface RestaDao {
     /** 
     * @Description: 餐厅的注册
     * @Param: [restaurant] 
@@ -37,5 +37,5 @@ public interface restaDao {
     * @Author: ygy 
     * @Date: 2019/4/2 
     */ 
-    boolean update(Restaurant restaurant);
+    boolean updateRest(Restaurant restaurant);
 }

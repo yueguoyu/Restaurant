@@ -1,14 +1,10 @@
 package com.ygy.controller;
 
-import com.ygy.dao.restaDao;
+import com.ygy.dao.RestaDao;
 import com.ygy.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.xml.crypto.Data;
-import java.sql.Time;
-import java.util.Date;
 
 /**
  * @author ygy
@@ -17,7 +13,7 @@ import java.util.Date;
 @RestController
 public class restaController {
     @Autowired
-    restaDao restaDao;
+    RestaDao restaDao;
     /** 
     * @Description: select by key
     * @Param: [rid] 
