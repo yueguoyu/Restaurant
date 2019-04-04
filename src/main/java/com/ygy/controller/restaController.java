@@ -54,6 +54,6 @@ public class restaController {
     */
     @RequestMapping("/restaupda")
     public void updateRest(Restaurant restaurant){
-        restaDao.update(restaurant);
+        restaDao.updateRest(restaurant);
     }
 }

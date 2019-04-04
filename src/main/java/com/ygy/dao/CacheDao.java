@@ -5,6 +5,7 @@ import com.ygy.model.Restaurant;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author ygy
@@ -27,7 +28,7 @@ public interface CacheDao {
     * @Author: ygy
     * @Date: 2019/4/3
     */
-    Menu SelectMenuByCache(String rid,String mid);
+    Menu selectMenuByCache(String rid,String mid);
     /** 
     * @Description: 获得餐厅全部菜单
     * @Param: [rid] 
@@ -36,4 +37,6 @@ public interface CacheDao {
     * @Date: 2019/4/3 
     */ 
     List<Menu> selectMenuAll(String rid);
+
+
 }

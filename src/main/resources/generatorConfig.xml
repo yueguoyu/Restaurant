@@ -29,10 +29,10 @@
                selectByExampleQueryId="false">
         </table>
         <table schema="restaurant" tableName="restaurant"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+                        enableCountByExample="false" enableUpdateByExample="false"
+                        enableDeleteByExample="false" enableSelectByExample="false"
+                        selectByExampleQueryId="false">
+    </table>
 
 
 

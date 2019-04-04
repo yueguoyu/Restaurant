@@ -5,11 +5,13 @@ import com.ygy.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author ygy
@@ -20,7 +22,7 @@ public class CacheDaoImpl implements  CacheDao {
 
     @Autowired
     private RedisTemplate redisTemplate;
-   static HashOperations<String,String, Menu> hashOperations;
+    static HashOperations<String,String, Menu> hashOperations;
     @Override
     public boolean addMenuCache(String rid,Menu menu) {
         hashOperations=redisTemplate.opsForHash();
@@ -39,20 +41,26 @@ public class CacheDaoImpl implements  CacheDao {
     @Autowired
     MenuDao menuDao;
     @Override
-    public  Menu SelectMenuByCache(String rid,String mid) {
-        Menu restmenu=null;
-        if(hashOperations.hasKey(rid,mid)){
-           restmenu=hashOperations.get(rid,mid);
-        }else {
-        Menu menu =menuDao.selectByidandmid(rid,mid);
-            hashOperations.put(rid,mid,menu);
+    public  Menu selectMenuByCache(String rid,String mid) {
+        if (hashOperations==null){
+            hashOperations=redisTemplate.opsForHash();
         }
-        return restmenu;
+
+        if(hashOperations.hasKey(rid,mid)){
+           return hashOperations.get(rid,mid);
+        }else {
+         Menu menu= menuDao.selectByidandmid(rid,mid);
+            addMenuCache(rid,menu);
+            return menu;
+        }
     }
 
     @Override
     public List<Menu> selectMenuAll(String rid) {
+        hashOperations=redisTemplate.opsForHash();
       List<Menu> list=hashOperations.values(rid);
         return list;
     }
+
+
 }

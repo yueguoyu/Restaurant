@@ -1,6 +1,8 @@
 package com.ygy.mapper;
 
 import com.ygy.model.Menu;
+import org.apache.ibatis.annotations.Param;
+
 
 public interface MenuMapper {
     /**
@@ -51,5 +53,5 @@ public interface MenuMapper {
      */
     int updateByPrimaryKey(Menu record);
 
-    Menu selectByidandmid(String rid,String mid);
+    Menu selectByidandmid(@Param("m_rid") String rid, @Param("menu_id") String mid);
 }
