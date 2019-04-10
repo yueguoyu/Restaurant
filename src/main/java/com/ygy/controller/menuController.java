@@ -17,12 +17,10 @@ public class menuController {
     CacheDao cacheDao;
     @Autowired
     MenuDao menuDao;
-    @Autowired
-    MenuMapper mapper;
     @RequestMapping("/menuSelect")
     public String menuSelect(String rid,String mid){
         System.out.println(cacheDao.selectMenuByCache("1","1"));
-//        System.out.println(menuDao.selectByidandmid("1","1").getmName());
+
        return "000";
     }
 }

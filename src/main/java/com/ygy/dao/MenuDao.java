@@ -50,4 +50,6 @@ public interface MenuDao {
     */ 
     Menu selectByidandmid(String rid,String mid);
 
+
+
 }

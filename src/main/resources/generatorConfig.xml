@@ -18,21 +18,21 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.ygy.mapper" targetProject="src"/>
 
-        <table schema="customer" tableName="customer"
+        <!--<table schema="customer" tableName="customer"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <!--<table schema="menu" tableName="menu"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <table schema="t_order" tableName="t_order"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-        <table schema="menu" tableName="menu"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table schema="restaurant" tableName="restaurant"
-                        enableCountByExample="false" enableUpdateByExample="false"
-                        enableDeleteByExample="false" enableSelectByExample="false"
-                        selectByExampleQueryId="false">
-    </table>
 
 
 
