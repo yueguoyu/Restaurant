@@ -28,7 +28,12 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table schema="t_order" tableName="t_order"
+        <table schema="admin" tableName="admin"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="user" tableName="user"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

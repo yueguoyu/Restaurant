@@ -35,7 +35,7 @@ public class OrderDaoImpl implements  OrderDao {
     public boolean deleteOrderByTableID(int tableid) {
         boolean rest=false;
         try{
-//            orderMapper.
+            orderMapper.deletByTableID(tableid);
             rest=true;
         }catch (Exception e){
             e.printStackTrace();
