@@ -25,7 +25,9 @@ logging:
   file: my.log
   path: G:\spring\Restaurant
 logging.level.com.ygy: DEBUG
-
+thymeleaf:
+  cache: false
+  mode: LEGACYHTML5
 
 
 

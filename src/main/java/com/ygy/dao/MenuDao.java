@@ -2,6 +2,8 @@ package com.ygy.dao;
 
 import com.ygy.model.Menu;
 
+import java.util.List;
+
 /**
  * @author ygy
  * @date 2019/4/3 11:09
@@ -49,6 +51,8 @@ public interface MenuDao {
     * @Date: 2019/4/3 
     */ 
     Menu selectByidandmid(String rid,String mid);
+
+    List<Menu> selectByrid(String rid);
 
 
 

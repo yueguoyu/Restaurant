@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ygy
  * @date 2019/4/3 11:21
@@ -89,5 +92,18 @@ public class MenuDaoImpl implements MenuDao {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return menu;
+    }
+
+    @Override
+    public List<Menu> selectByrid(String rid) {
+        List<Menu> list=null;
+        try{
+            list=menuMapper.selectByrid(rid);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("selectByrid",e);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+        }
+        return list;
     }
 }
