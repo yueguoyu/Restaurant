@@ -20,6 +20,8 @@ import java.util.List;
 public class MenuDaoImpl implements MenuDao {
     @Autowired
     MenuMapper menuMapper;
+    @Autowired
+    OssclientUtilDao ossclientUtilDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     @Transactional(rollbackFor = Exception.class)
