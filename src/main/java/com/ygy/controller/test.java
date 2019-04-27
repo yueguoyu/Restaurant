@@ -6,8 +6,10 @@ import net.minidev.json.JSONObject;
 import org.apache.http.entity.ContentType;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,8 +45,15 @@ public class test {
     @GetMapping("/ttt")
     @ResponseBody
     public String test(){
-     String url= ossclientUtilDao.fileUplodnew("C:\\Users\\ygy19\\Pictures\\Camera Roll\\ct4_bg.png","yyy.jpg","img/ygy/");
+     String url= ossclientUtilDao.fileUplodnew("C:\\Users\\ygy\\Pictures\\webwxgetmsgimg (4).jpg","yyy.jpg","img/ygy/");
         return url;
+    }
+
+
+    @GetMapping("/hello")
+    public String hello(ModelMap map){
+
+        return "ttt";
     }
 
 }

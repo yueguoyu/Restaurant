@@ -6,6 +6,7 @@ import com.ygy.dao.OssclientUtilDao;
 import com.ygy.mapper.MenuMapper;
 import com.ygy.model.Menu;
 import net.minidev.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,18 +44,21 @@ public class menuController {
         return list;
     }
     @PostMapping("/addMenu")
+    @ResponseBody
     public void  addMenu(@RequestParam("file") MultipartFile file){
         // 判断文件是否为空
         if (!file.isEmpty()) {
             try {
-                // 文件保存路径
-                String filePath = request.getSession().getServletContext().getRealPath("/") + "upload/"
-                        + file.getOriginalFilename();
-                // 转存文件
-                file.transferTo(new File(filePath));
+             File file1=new File("C:\\Users\\ygy\\Pictures\\images");
+                FileUtils.copyInputStreamToFile(file.getInputStream(), file1);
+//               String url= ossclientUtilDao.fileUplodnew(filePath,"yy1.jpg","img/ygy/");
+                System.out.println();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            finally {
+            }
         }
+
     }
 }
