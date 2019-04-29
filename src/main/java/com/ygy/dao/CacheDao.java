@@ -39,4 +39,6 @@ public interface CacheDao {
     List<Menu> selectMenuAll(String rid);
 
 
+
+
 }
