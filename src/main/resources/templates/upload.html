@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <!--/*@thymesVar id="menu" type="com.ygy.model.Menu"*/-->
+                        <form role="form" action="#" th:action="@{/addMenu}" method="post" th:object="${menu}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">name：</label><input type="text" th:field="${menu.mName}" class="form-control"  />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">weather</label><input type="text" th:field="${menu.weather}" class="form-control" id="exampleInputPassword1" />
+                            </div>
+                            <div class="form-group">
+                                <label >File input</label>
+                                <input type="file" name="file"/>
+                                <p class="help-block">
+                                    Example block-level help text here.
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">price：</label><input type="text"  th:field="${menu.price}" class="form-control" id="exampleInputEmail1" />
+                            </div>
+                            <div class="season">
+                                <label for="exampleInputEmail1">season：</label>
+                                <label class="radio">
+                                    <input type="radio" name="optionsRadios" th:field="${menu.season}"  th:value="1">  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="optionsRadios"   th:field="${menu.season}"  th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="optionsRadios"   th:field="${menu.season}"   th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="optionsRadios"   th:field="${menu.season}"   th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="optionsRadios"    th:field="${menu.season}"   th:value="5">5</input>
+                                </label>
+                            </div>
+                            <div class="hotcold">
+                                <label for="exampleInputEmail1">hotcold：</label>
+                                <label class="radio">
+                                    <input type="radio" name="hotcold" th:field="${menu.hotcold}" th:value="1" >  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="hotcold" th:field="${menu.hotcold}"  th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="hotcold" th:field="${menu.hotcold}"  th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="hotcold"  th:field="${menu.hotcold}" th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="hotcold" th:field="${menu.hotcold}"  th:value="5">5</input>
+                                </label>
+                            </div>
+                            <div class="menu_hot">
+                                <label for="exampleInputEmail1">hot：</label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_hot"  th:field="${menu.menuHot}"  th:value="1" >  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_hot"     th:field="${menu.menuHot}"   th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_hot"     th:field="${menu.menuHot}"   th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_hot"     th:field="${menu.menuHot}"  th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_hot"     th:field="${menu.menuHot}"  th:value="5">5</input>
+                                </label>
+                            </div>
+
+                            <div class="menu_acid">
+                                <label for="exampleInputEmail1">acid：</label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_acid"  th:field="${menu.menuAcid}"  th:value="1" >  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_acid"    th:field="${menu.menuAcid}" th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_acid"    th:field="${menu.menuAcid}"  th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_acid"    th:field="${menu.menuAcid}"  th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_acid"    th:field="${menu.menuAcid}"  th:value="5">5</input>
+                                </label>
+                            </div>
+                            <!--甜度-->
+                            <div class="menu_sweet">
+                                <label for="exampleInputEmail1">sweet：</label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_sweet" th:field="${menu.menuSweet}"   th:value="1" >  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_sweet" th:field="${menu.menuSweet}"    th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_sweet"    th:field="${menu.menuSweet}"  id="optionsRadios3"  th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_sweet"    th:field="${menu.menuSweet}"  id="optionsRadios4"  th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_sweet"   th:field="${menu.menuSweet}"  id="optionsRadios5"  th:value="5">5</input>
+                                </label>
+                            </div>
+                            <!--bitter-->
+                            <div class="menu_bitter">
+                                <label for="exampleInputEmail1">bitter：</label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_bitter"  th:field="${menu.menuBitter}" id="optionsRadios1"  th:value="1" >  1</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_bitter"      th:field="${menu.menuBitter}"  th:value="2"> 2</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_bitter"    th:field="${menu.menuBitter}"   th:value="3">3</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_bitter"    th:field="${menu.menuBitter}"    th:value="4">4</input>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="menu_bitter"    th:field="${menu.menuBitter}"    th:value="5">5</input>
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label><input type="checkbox" />Check me out</label>
+                            </div> <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+</html>

@@ -50,13 +50,14 @@ public class menuController {
     }
     @PostMapping("/addMenu")
     @ResponseBody
-    public String  addMenu(HttpServletRequest request,@RequestParam("file") MultipartFile file)  {
+    public String  addMenu(HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Menu menu)  {
         // 判断文件是否为空
         String url="";
         if (!file.isEmpty()){
           String filename=  file.getOriginalFilename();
             UUID uuid=UUID.randomUUID();
-
+                String s=uuid.toString();
+           String menuid= s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
             try {
                 byte[] bytes= file.getBytes();
               File f=new File("E:\\image\\");
@@ -73,11 +74,18 @@ public class menuController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
+            menu.setMenuId(menuid);
+           menu.setRestaId("1");
+           menu.setImgurl(url);
         }
+        menuDao.addMenu(menu);
+        return menu.toString();
 
-        return url;
-
+    }
+    @PostMapping("/add")
+    @ResponseBody
+    public  String add(@ModelAttribute Menu menu){
+        String mname=menu.getmName();
+        return mname;
     }
 }

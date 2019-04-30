@@ -1,11 +1,8 @@
 package com.ygy.dao;
 
 import com.ygy.model.Menu;
-import com.ygy.model.Restaurant;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author ygy
@@ -20,7 +17,7 @@ public interface CacheDao {
     * @Author: ygy
     * @Date: 2019/4/3
     */
-    boolean addMenuCache(String r_id,Menu menu);
+    boolean addMenuCache(String r_id, Menu menu);
     /**
     * @Description:  从缓存中获取
     * @Param: rid

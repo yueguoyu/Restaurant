@@ -1,12 +1,10 @@
 package com.ygy.dao;
 
 import com.ygy.mapper.CustomerMapper;
-import com.ygy.mapper.MenuMapper;
 import com.ygy.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 @Service
