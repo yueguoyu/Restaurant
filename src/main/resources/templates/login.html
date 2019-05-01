@@ -4,30 +4,36 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <style>
-    .login{display: block; width: 500px; height: 400px; margin: 50% auto;}
+    body{display: block; width: 100%;  height: 100%; background: url(http://localhost:8080/image/pic1.jpg) no-repeat;}
+    .login{display: block; width: 455px; height: 440px;  margin: 0 auto;  padding-top: 300px; }
+    h2{display: block; margin: 0 auto; width: 100%; text-align: center; color: #ffffff;}
+    .btn1{display: block; width: 100%; height: 55px; background-color: aqua;}
+    .btn2{display: block; width: 100%; height: 55px; background-color: coral; margin-top: 10px; text-align: center;}
 </style>
 <body>
 <div class="container">
     <div class="login">
+        <h2>登录</h2>
         <div class="row clearfix">
             <div class="col-md-12 column">
                 <!--/*@thymesVar id="user" type="com.ygy.model.User"*/-->
-                <form role="form" action="#" th:action="@{/addMenu}" method="post" th:object="${user}" enctype="multipart/form-data">
+                <form role="form" action="#" th:action="@{/signIn}" method="post" th:object="${user}" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">number</label><input type="text" class="form-control" id="exampleInputEmail1" />
+                        <label for="exampleInputEmail1">账号</label><input type="text" class="form-control" th:field="${user.uId}" value="账号" id="exampleInputEmail1" />
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label><input type="password" class="form-control" id="exampleInputPassword1" />
+                        <label for="exampleInputPassword1">密码</label><input type="password" class="form-control" th:field="${user.pass}" value="密码" id="exampleInputPassword1" />
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" />Check me out</label>
-                    </div> <button type="submit" class="btn btn-default">Submit</button>
-                    <button type="reset" class="btn btn-default">reset</button>
+                    </div> <button type="submit" class="btn btn-default btn1">提交</button>
                 </form>
+                <button  class="btn btn-default btn2" ><a  href="https://91mjw.com/video/179.htm?Play=1">注册</a></button>
+
             </div>
         </div>
     </div>
