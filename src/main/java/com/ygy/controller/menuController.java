@@ -75,7 +75,6 @@ public class menuController {
                 e.printStackTrace();
             }
             menu.setMenuId(menuid);
-           menu.setRestaId("1");
            menu.setImgurl(url);
         }
         menuDao.addMenu(menu);

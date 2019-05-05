@@ -49,6 +49,7 @@ public class LoginController {
           Menu menu=new Menu();
           model.addAttribute(menu);
           if (pass.equals(user.getPass())){
+              model.addAttribute("RestaId",user.getuId());
                 return "upload";
           }else {
               return "login";
