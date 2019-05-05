@@ -59,14 +59,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User selectUserById(String uid) {
-        User user=null;
+
         try{
-            userMapper.selectByPrimaryKey(uid);
+            User user=  userMapper.selectByPrimaryKey(uid);
+            return user;
         }catch (Exception e){
             e.printStackTrace();
             logger.error("selectUserById出错",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return null;
         }
-        return user;
     }
 }

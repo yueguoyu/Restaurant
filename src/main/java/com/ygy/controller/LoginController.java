@@ -3,6 +3,7 @@ package com.ygy.controller;
 import com.ygy.dao.OssclientUtilDao;
 import com.ygy.dao.Testygy;
 import com.ygy.dao.UserDao;
+import com.ygy.mapper.UserMapper;
 import com.ygy.model.Menu;
 import com.ygy.model.User;
 import net.minidev.json.JSONObject;
@@ -19,13 +20,6 @@ public class LoginController {
    UserDao userDao;
     @Autowired
     OssclientUtilDao ossclientUtilDao;
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test1(){
-
-        System.out.println("的撒撒旦的撒");
-        return "粗 的撒";
-    }
 
     @RequestMapping("/ygy")
     @ResponseBody
@@ -49,10 +43,11 @@ public class LoginController {
         return "login";
     }
 
-
     @PostMapping("/signIn")
-    public  String signIn(@ModelAttribute User user){
+    public  String signIn(@ModelAttribute User user,Model model){
           String pass=userDao.selectUserById(user.getuId()).getPass();
+          Menu menu=new Menu();
+          model.addAttribute(menu);
           if (pass.equals(user.getPass())){
                 return "upload";
           }else {
@@ -60,7 +55,13 @@ public class LoginController {
           }
     }
 
-
+    @PostMapping("/register")
+    public  String  register(@ModelAttribute User user){
+        if (user!=null){
+            userDao.addUser(user);
+        }
+            return "login";
+    }
 
 
     @GetMapping("/hello")

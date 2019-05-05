@@ -8,11 +8,44 @@
     <title>Title</title>
 </head>
 <style>
+    .ma{margin: 0 auto;}
     body{display: block; width: 100%;  height: 100%; background: url(http://localhost:8080/image/pic1.jpg) no-repeat;}
     .login{display: block; width: 455px; height: 440px;  margin: 0 auto;  padding-top: 300px; }
     h2{display: block; margin: 0 auto; width: 100%; text-align: center; color: #ffffff;}
     .btn1{display: block; width: 100%; height: 55px; background-color: aqua;}
     .btn2{display: block; width: 100%; height: 55px; background-color: coral; margin-top: 10px; text-align: center;}
+    input{ display: inline-block; background: #fff;}
+    .xiao-container{ width: 100%;}
+    .xiao-register-box{ position: relative; height: 500px; width: 750px; top: 50px; margin: 0 auto; z-index: 99999; background: #ffffff; border: 7px solid #ccc;}
+    .xiao-title-box{ position: absolute; width: 300px; height: 50px; margin-left: 250px; margin-top: 5px; text-align: center; font-size: 28px; font-weight: 800; color: #ff5000; line-height: 50px;}
+    .xiao-username-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 100px; margin-left: 80px; font-weight: 700;}
+    .xiao-username-input{ display: inline-block; margin-left: 45px;
+        /*background: green;*/
+    }
+    #username{ height: 35px; width: 290px; border: 2px solid #ccc; border-radius: 5px;}
+    .xiao-userPassword-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 180px; margin-left: 80px; font-weight: 700;}
+    .xiao-userPassword-input{ display: inline-block; margin-left: 61px;}
+    #userPassword{ height: 35px; width: 290px; border: 2px solid #ccc; border-radius: 5px;}
+    .xiao-userRePassword-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 260px; margin-left: 80px; font-weight: 700;}
+    .xiao-userRePassword-input{ display: inline-block; margin-left: 28px;}
+    #userRePassword{ height: 35px; width: 290px; border: 2px solid #ccc; border-radius: 5px;}
+    .xiao-userPhone-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 340px; margin-left: 80px; font-weight: 700;}
+    .xiao-userPhone-input{ display: inline-block; margin-left: 28px;}
+    #userPhone{ height: 35px; width: 290px; border: 2px solid #ccc; border-radius: 5px;}
+    .xiao-userEmail-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 420px; margin-left: 80px; font-weight: 700;}
+    .xiao-userEmail-input{ display: inline-block; margin-left: 28px;}
+    #userEmail{ height: 35px; width: 290px; border: 2px solid #ccc; border-radius: 5px;}
+    .xiao-userGender-box{ position: absolute; width: 420px; height: 40px; line-height: 40px; margin-top: 500px; margin-left: 82px; font-weight: 700;}
+    .xiao-userGender-input{ display: inline-block; margin-left: 62px;}
+    .xiao-require{ color: red;}
+    .xiao-submit-box{ position: absolute; width: 80px; height: 40px; line-height: 40px; margin-top: 400px; margin-left: 200px; border-radius: 5px; background: grey;}
+    #xiao-submit-button{ display: inline-block; width: 80px; height: 40px; border-radius: 5px; background: red;}
+
+    .xiao-goLogin-box{ position: absolute; width: 150px; height: 20px; margin-top: 400px; margin-left: 320px;}
+    .dia-close{position: absolute; top: 0px; right: -47px; font-size: 50px;}
+
+    #warning{ position: absolute; color: red; font-size: 20px; font-weight: normal; font-style: normal; text-decoration: none;}
+
 </style>
 <body>
 <div class="container">
@@ -32,15 +65,89 @@
                         <label><input type="checkbox" />Check me out</label>
                     </div> <button type="submit" class="btn btn-default btn1">提交</button>
                 </form>
-                <button  class="btn btn-default btn2" ><a  href="https://91mjw.com/video/179.htm?Play=1">注册</a></button>
-
+                <button  class="btn btn-default btn2"  onClick="TGDialogS('pop')" >注册</button>
             </div>
         </div>
     </div>
+    <div class="dialog" id="pop" style="display:none">
+        <a class="dia-close" href="javascript:showDialog.hide()" title="关闭">×</a>
+        <div class="xiao-container">
+            <div class="xiao-register-box ma">
+                <div class="xiao-title-box">
+                    <span>用户注册</span>
+                </div>
+                <form action="#" method="post" th:action="@{/register}"  th:object="${user}" enctype="multipart/form-data">
+                    <div class="xiao-username-box ma">
+                        <span class="xiao-require">*</span>
+                        <label for="username">用户名</label>
+                        <div class="xiao-username-input">
+                            <input type="text" id="username" name="username" th:field="${user.uId}" placeholder="请输入电话号码 长度:11个字符" />
+                        </div>
+                    </div>
+
+                    <div class="xiao-userPassword-box ma">
+                        <span class="xiao-require">*</span>
+                        <label for="userPassword">密码</label>
+                        <div class="xiao-userPassword-input">
+                            <input type="password" id="userPassword" name="userPassword" th:field="${user.pass}" placeholder="请输入密码 长度:6-12个字符" />
+                        </div>
+                    </div>
+
+                    <div class="xiao-userRePassword-box ma">
+                        <span class="xiao-require">*</span>
+                        <label for="userRePassword">确认密码</label>
+                        <div class="xiao-userRePassword-input">
+                            <input type="password" id="userRePassword" name="userRePassword" placeholder="请重复输入密码" onblur="check()"/>
+                            <span id="warning">   </span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="xiao-submit-box">
+                        <input id = "xiao-submit-button" type="submit" value="注册"/>
+                    </div>
+
+                    <div class="xiao-goLogin-box">
+                        <a href="login.html" style="text-decoration: none;">已有账号？去登录</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
+<script src="//ossweb-img.qq.com/images/js/milo_bundle/milo.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    function TGDialogS(e){
+        // 利用milo库引入dialog组件
+        need("biz.dialog",function(Dialog){
+            Dialog.show({
+                id:e,
+                bgcolor:'#000', //弹出“遮罩”的颜色，格式为"#FF6600"，可修改，默认为"#fff"
+                opacity:50 //弹出“遮罩”的透明度，格式为｛10-100｝，可选
+            });
+        });
+    }
+    function closeDialog(){
+        // 利用milo库引入dialog组件
+        need("biz.dialog",function(Dialog){
+            Dialog.hide();
+        });
+    }
+    function check(){
+        if(document.getElementById("userPassword").value!=
+            document.getElementById("userRePassword").value)
+        {
+            document.getElementById("warning").innerHTML="   两次密码的输入不一致";
+        }else{
+            document.getElementById("warning").innerHTML="   ";
+        }
+    }
+</script>
 </body>
 </html>
 </html>
