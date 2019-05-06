@@ -7,6 +7,7 @@
 
     <meta charset="UTF-8"/>
     <title>Title</title>
+  
 </head>
 <body>
     <div class="container">
@@ -16,6 +17,10 @@
                     <div class="col-md-12 column">
                         <!--/*@thymesVar id="menu" type="com.ygy.model.Menu"*/-->
                         <form role="form" action="#" th:action="@{/addMenu}" method="post" th:object="${menu}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">id：</label> <input th:field="*{restaId}">
+                                <p  class="p1" th:text="${RestaId}"></p></input>
+                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">name：</label><input type="text" th:field="${menu.mName}" class="form-control"  />
                             </div>
@@ -143,7 +148,7 @@
                                     <input type="radio" name="menu_bitter"    th:field="${menu.menuBitter}"    th:value="5">5</input>
                                 </label>
                             </div>
-                            <div > <input type="text" name="menu_bitter"    th:field="${menu.restaId}"  value="${}}" /></div>
+
                             <div class="checkbox">
                                 <label><input type="checkbox" />Check me out</label>
                             </div> <button type="submit" class="btn btn-default">Submit</button>
