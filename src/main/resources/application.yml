@@ -4,6 +4,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+  cache:
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
   redis:
     database: 0
     host: 127.0.0.1
@@ -25,9 +29,7 @@ logging:
   file: my.log
   path: G:\spring\Restaurant
 logging.level.com.ygy: DEBUG
-thymeleaf:
-  cache: false
-  mode: LEGACYHTML5
+
 
 
 

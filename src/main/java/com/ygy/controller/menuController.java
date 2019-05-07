@@ -48,9 +48,9 @@ public class menuController {
       json.put("list",list);
         return list;
     }
-    @PostMapping("/addMenu")
+    @PostMapping("/addMenu/{id}")
     @ResponseBody
-    public String  addMenu(HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Menu menu)  {
+    public String  addMenu(HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Menu menu,@PathVariable("id") String rid)  {
         // 判断文件是否为空
         String url="";
         if (!file.isEmpty()){
@@ -74,6 +74,7 @@ public class menuController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            menu.setRestaId(rid);
             menu.setMenuId(menuid);
            menu.setImgurl(url);
         }
