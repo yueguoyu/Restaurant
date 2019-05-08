@@ -2,7 +2,6 @@ package com.ygy.dao;
 
 import com.ygy.mapper.AdminMapper;
 import com.ygy.model.Admin;
-import com.ygy.model.Restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

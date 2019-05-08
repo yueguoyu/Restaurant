@@ -39,10 +39,7 @@ public class restaController {
         restaurant.setrId("2");
         restaurant.setName("ygy");
         restaurant.setAddress("和平银座");
-        restaurant.setLon(1.0);
-        restaurant.setLat(1.1);
         restaurant.setrPhone("12345678901");
-        restaurant.setMenuId("123");
         restaDao.addResta(restaurant);
     }
     /**
