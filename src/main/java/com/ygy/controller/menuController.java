@@ -8,6 +8,8 @@ import com.ygy.model.Menu;
 import net.minidev.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -24,7 +26,7 @@ import java.util.UUID;
  * @author ygy
  * @date 2019/4/4 14:58
  */
-@RestController
+@Controller
 public class menuController {
     @Autowired
     CacheDao cacheDao;
@@ -34,6 +36,41 @@ public class menuController {
     OssclientUtilDao ossclientUtilDao;
     @Autowired
     private HttpServletRequest request;
+
+    @PostMapping("/addMenu/{id}")
+    public String  addMenu(HttpServletRequest request, @RequestParam("file") MultipartFile file, @ModelAttribute Menu menu, @PathVariable("id") String rid, Model model)  {
+        // 判断文件是否为空
+        String url="";
+        if (!file.isEmpty()){
+            String filename=  file.getOriginalFilename();
+            UUID uuid=UUID.randomUUID();
+            String s=uuid.toString();
+            String menuid= s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
+            try {
+                byte[] bytes= file.getBytes();
+                File f=new File("E:\\image\\");
+                if (!f.exists()){
+                    f.mkdirs();
+                }
+                String path=f.getCanonicalPath()+"/"+filename;
+                File file1=new File(path);
+                FileOutputStream outputStream  =new FileOutputStream(file1);
+                outputStream.write(bytes);
+                outputStream.close();
+                url= ossclientUtilDao.fileUplodnew(path,filename,"img/ygy/");
+                file1.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            menu.setRestaId(rid);
+            menu.setMenuId(menuid);
+            menu.setImgurl(url);
+        }
+        menuDao.addMenu(menu);
+        model.addAttribute("continue","请继续添加，如果添加完请关闭网页！");
+        return "upload";
+
+    }
 
     @RequestMapping("/menuSelect")
     public String menuSelect(String rid,String mid){
@@ -48,40 +85,7 @@ public class menuController {
       json.put("list",list);
         return list;
     }
-    @PostMapping("/addMenu/{id}")
-    @ResponseBody
-    public String  addMenu(HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Menu menu,@PathVariable("id") String rid)  {
-        // 判断文件是否为空
-        String url="";
-        if (!file.isEmpty()){
-          String filename=  file.getOriginalFilename();
-            UUID uuid=UUID.randomUUID();
-                String s=uuid.toString();
-           String menuid= s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
-            try {
-                byte[] bytes= file.getBytes();
-              File f=new File("E:\\image\\");
-                if (!f.exists()){
-                    f.mkdirs();
-                }
-                String path=f.getCanonicalPath()+"/"+filename;
-                File file1=new File(path);
-                FileOutputStream outputStream  =new FileOutputStream(file1);
-                outputStream.write(bytes);
-                outputStream.close();
-               url= ossclientUtilDao.fileUplodnew(path,filename,"img/ygy/");
-                file1.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            menu.setRestaId(rid);
-            menu.setMenuId(menuid);
-           menu.setImgurl(url);
-        }
-        menuDao.addMenu(menu);
-        return menu.toString();
 
-    }
     @PostMapping("/add")
     @ResponseBody
     public  String add(@ModelAttribute Menu menu){
