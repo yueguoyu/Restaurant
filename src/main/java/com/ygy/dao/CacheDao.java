@@ -35,6 +35,8 @@ public interface CacheDao {
     */ 
     List<Menu> selectMenuAll(String rid);
 
+    void addOrder(String uid,Menu menu);
+
 
 
 

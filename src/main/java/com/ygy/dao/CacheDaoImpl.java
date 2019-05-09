@@ -3,7 +3,9 @@ package com.ygy.dao;
 import com.ygy.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class CacheDaoImpl implements  CacheDao {
     @Autowired
     private RedisTemplate redisTemplate;
     static HashOperations<String,String, Menu> hashOperations;
+    static SetOperations<String,Menu> setOperations;
     @Override
     public boolean addMenuCache(String rid,Menu menu) {
         hashOperations=redisTemplate.opsForHash();
@@ -57,7 +60,10 @@ public class CacheDaoImpl implements  CacheDao {
         return list;
     }
 
+    @Override
+    public void addOrder(String uid, Menu menu) {
+        setOperations=redisTemplate.opsForSet();
 
 
-
+    }
 }
