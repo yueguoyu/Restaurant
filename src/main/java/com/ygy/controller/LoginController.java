@@ -1,10 +1,8 @@
 package com.ygy.controller;
 
-import com.ygy.dao.OssclientUtilDao;
-import com.ygy.dao.RestaDao;
-import com.ygy.dao.Testygy;
-import com.ygy.dao.UserDao;
+import com.ygy.dao.*;
 import com.ygy.mapper.UserMapper;
+import com.ygy.model.LineItem;
 import com.ygy.model.Menu;
 import com.ygy.model.Restaurant;
 import com.ygy.model.User;
@@ -13,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -24,7 +24,8 @@ public class LoginController {
     OssclientUtilDao ossclientUtilDao;
     @Autowired
     RestaDao restaDao;
-
+    @Autowired
+    BuyerCart buyerCart;
     @RequestMapping("/ygy")
     @ResponseBody
     public String ttt(){
@@ -37,8 +38,18 @@ public class LoginController {
     @GetMapping("/ttt")
     @ResponseBody
     public String test(){
-     String url= ossclientUtilDao.fileUplodnew("C:\\Users\\ygy\\Pictures\\webwxgetmsgimg (4).jpg","yyy.jpg","img/ygy/");
-        return url;
+// 直接将json信息打印出来
+        LineItem lineItem=new LineItem();
+        lineItem.setName("ygy");
+        lineItem.setPrice(10);
+        lineItem.setQuantity(2);
+        buyerCart.add("dsa",lineItem);
+        List<LineItem> list= buyerCart.getall("dsa");
+        for (LineItem i:list){
+            System.out.println(i.getName());
+        }
+        System.out.println(buyerCart.getCartTotal("dsa"));
+        return "0123";
     }
     @GetMapping("/home")
     public String login(Model model){
