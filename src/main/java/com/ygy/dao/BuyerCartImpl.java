@@ -1,7 +1,6 @@
 package com.ygy.dao;
 
 import com.ygy.model.LineItem;
-import com.ygy.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;

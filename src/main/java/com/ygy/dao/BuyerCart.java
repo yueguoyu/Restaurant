@@ -1,7 +1,6 @@
 package com.ygy.dao;
 
 import com.ygy.model.LineItem;
-import com.ygy.model.Menu;
 
 import java.util.List;
 

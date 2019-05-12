@@ -1,7 +1,6 @@
 package com.ygy.controller;
 
 import com.ygy.dao.*;
-import com.ygy.mapper.UserMapper;
 import com.ygy.model.LineItem;
 import com.ygy.model.Menu;
 import com.ygy.model.Restaurant;
