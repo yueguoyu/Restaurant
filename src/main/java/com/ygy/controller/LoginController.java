@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.FormParam;
 import java.util.List;
 
 @Controller
@@ -34,21 +35,13 @@ public class LoginController {
         json.put("numb",2);
         return json.toJSONString();
     }
-    @GetMapping("/ttt")
+    @PostMapping("/ttt")
     @ResponseBody
-    public String test(){
-// 直接将json信息打印出来
-        LineItem lineItem=new LineItem();
-        lineItem.setName("ygy");
-        lineItem.setPrice(10);
-        lineItem.setQuantity(2);
-        buyerCart.add("dsa",lineItem);
-        List<LineItem> list= buyerCart.getall("dsa");
-        for (LineItem i:list){
-            System.out.println(i.getName());
-        }
-        System.out.println(buyerCart.getCartTotal("dsa"));
-        return "0123";
+    public String test(@RequestBody JSONObject jsonParam,@FormParam("remarks") String remarks){
+        System.out.println(jsonParam.toJSONString());
+        System.out.println("hahahha:"+remarks);
+//        放入redis进行svd计算
+        return jsonParam.toJSONString();
     }
     @GetMapping("/home")
     public String login(Model model){
@@ -61,16 +54,26 @@ public class LoginController {
 
     @PostMapping("/signIn")
     public  String signIn(@ModelAttribute Restaurant restaurant,Model model){
-          String pass=restaDao.selectByid(restaurant.getrId()).getPass();
-          Menu menu=new Menu();
-          model.addAttribute(menu);
-          if (pass.equals(restaurant.getPass())){
-              model.addAttribute("RestaId",restaurant.getrId());
+        try {
+            String pass = restaDao.selectByid(restaurant.getrId()).getPass();
+            if (pass == null) {
+                model.addAttribute("erro", "请注册用户！");
+                return "login";
+            }
+            Menu menu = new Menu();
+            model.addAttribute(menu);
+            if (pass.equals(restaurant.getPass())) {
+                model.addAttribute("RestaId", restaurant.getrId());
                 return "upload";
-          }else {
-              model.addAttribute("erro","用户名或密码错误");
-              return "login";
-          }
+            } else {
+                model.addAttribute("erro", "用户名或密码错误");
+                return "login";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("erro", "请注册用户！");
+            return "login";
+        }
     }
 
     @PostMapping("/register")

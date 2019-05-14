@@ -7,6 +7,7 @@ import com.ygy.dao.OssclientUtilDao;
 import com.ygy.model.Menu;
 import net.minidev.json.JSONObject;
 
+import org.apache.spark.sql.catalyst.expressions.Stack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class menuController {
     public String  addMenu(HttpServletRequest request, @RequestParam("file") MultipartFile file, @ModelAttribute Menu menu, @PathVariable("id") String rid, Model model)  {
         // 判断文件是否为空
         String url="";
+        String mrid=rid;
         if (!file.isEmpty()){
             String filename=  file.getOriginalFilename();
             UUID uuid=UUID.randomUUID();
@@ -61,12 +63,13 @@ public class menuController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            menu.setRestaId(rid);
+            menu.setRestaId(mrid);
             menu.setMenuId(menuid);
             menu.setImgurl(url);
         }
         menuDao.addMenu(menu);
         model.addAttribute("continue","请继续添加，如果添加完请关闭网页！");
+        model.addAttribute("RestaId", rid);
         return "upload";
 
     }
