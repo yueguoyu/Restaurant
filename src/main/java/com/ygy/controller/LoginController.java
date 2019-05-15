@@ -66,7 +66,7 @@ public class LoginController {
 
         // 存入session到redis
         valueOperations.set("openid:"+model.getOpenid(),model.getSession_key(),1000 * 60 * 30);
-
+//获取openid
         System.out.println(model.getOpenid());
         return IMoocJSONResult.ok();
     }
@@ -74,20 +74,23 @@ public class LoginController {
 
     @RequestMapping("/ygy")
     @ResponseBody
-    public String ttt(){
-        JSONObject json=new JSONObject();
-        json.put("name","ygy");
+    public String ttt(@RequestBody JSONObject jsonParam){
 
-        json.put("numb",2);
-        return json.toJSONString();
+        System.out.println(jsonParam.toJSONString());
+        Remarks remarks=  com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),Remarks.class);
+//获取备注
+        System.out.println("remarks:"+remarks.getRemarks());
+
+        return "";
     }
     @PostMapping("/ttt")
     @ResponseBody
     public String test(@RequestBody JSONObject jsonParam){
+//获取订单信息
         System.out.println(jsonParam.toJSONString());
         System.out.println(model.getOpenid());
       myorder myorder= com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),myorder.class);
-        System.out.println(myorder.getRemarks()+" "+myorder.getName());
+
 
 //        放入redis进行svd计算   redis存储+进行svd计算+打印输出订单
         return jsonParam.toJSONString();

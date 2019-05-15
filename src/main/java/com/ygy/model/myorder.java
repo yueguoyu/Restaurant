@@ -8,7 +8,6 @@ public class myorder {
     private String name;
     private String price;
     private String detail;
-    private String remarks;
 
     public void setName(String name) {
         this.name = name;
@@ -20,10 +19,6 @@ public class myorder {
 
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
     }
 
     public String getName() {
@@ -38,7 +33,5 @@ public class myorder {
         return price;
     }
 
-    public String getRemarks() {
-        return remarks;
-    }
+
 }
