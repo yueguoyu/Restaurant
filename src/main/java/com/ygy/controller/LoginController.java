@@ -1,18 +1,22 @@
 package com.ygy.controller;
 
+import com.ygy.common.HttpClientUtil;
+import com.ygy.common.IMoocJSONResult;
+import com.ygy.common.RedisOperator;
 import com.ygy.dao.*;
-import com.ygy.model.LineItem;
-import com.ygy.model.Menu;
-import com.ygy.model.Restaurant;
-import com.ygy.model.User;
+import com.ygy.model.*;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -26,6 +30,48 @@ public class LoginController {
     RestaDao restaDao;
     @Autowired
     BuyerCart buyerCart;
+
+    @Autowired
+    private RedisOperator redis;
+    @Autowired
+    RedisTemplate redisTemplate;
+
+    static ValueOperations valueOperations;
+    WXSessionModel model;
+    @PostMapping("/wxLogin")
+    @ResponseBody
+    public IMoocJSONResult wxLogin(String code) {
+        valueOperations=redisTemplate.opsForValue();
+        System.out.println("wxlogin - code: " + code);
+
+//		https://api.weixin.qq.com/sns/jscode2session?
+//				appid=APPID&
+//				secret=SECRET&
+//				js_code=JSCODE&
+//				grant_type=authorization_code
+
+        String url = "https://api.weixin.qq.com/sns/jscode2session";
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("appid", "wx39b5cf216a87faa6");
+        param.put("secret", "2d6ba33a70348759be5795f335708ea1");
+        param.put("js_code", code);
+        param.put("grant_type", "authorization_code");
+
+        String wxResult = HttpClientUtil.doGet(url, param);
+        System.out.println(wxResult);
+
+         model= com.alibaba.fastjson.JSONObject.parseObject(wxResult,WXSessionModel.class);
+
+//		WXSessionModel model = JsonUtils.jsonToPojo(wxResult, WXSessionModel.class);
+
+        // 存入session到redis
+        valueOperations.set("openid:"+model.getOpenid(),model.getSession_key(),1000 * 60 * 30);
+
+        System.out.println(model.getOpenid());
+        return IMoocJSONResult.ok();
+    }
+
+
     @RequestMapping("/ygy")
     @ResponseBody
     public String ttt(){
@@ -37,10 +83,13 @@ public class LoginController {
     }
     @PostMapping("/ttt")
     @ResponseBody
-    public String test(@RequestBody JSONObject jsonParam,@FormParam("remarks") String remarks){
+    public String test(@RequestBody JSONObject jsonParam){
         System.out.println(jsonParam.toJSONString());
-        System.out.println("hahahha:"+remarks);
-//        放入redis进行svd计算
+        System.out.println(model.getOpenid());
+      myorder myorder= com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),myorder.class);
+        System.out.println(myorder.getRemarks()+" "+myorder.getName());
+
+//        放入redis进行svd计算   redis存储+进行svd计算+打印输出订单
         return jsonParam.toJSONString();
     }
     @GetMapping("/home")
