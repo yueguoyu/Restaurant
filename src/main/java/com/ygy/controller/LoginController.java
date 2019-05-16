@@ -115,7 +115,7 @@ public class LoginController {
             Menu menu = new Menu();
             model.addAttribute(menu);
             if (pass.equals(restaurant.getPass())) {
-                model.addAttribute("RestaId", restaurant.getrId());
+                model.addAttribute("RestaId", "restaurant");
                 return "upload";
             } else {
                 model.addAttribute("erro", "用户名或密码错误");
