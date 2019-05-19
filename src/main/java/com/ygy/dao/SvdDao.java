@@ -37,6 +37,14 @@ public interface SvdDao {
     * @Date: 2019/5/17 
     */ 
     boolean addOpidTable(String name);
+    /**
+    * @Description:
+    * @Param: [m_name]
+    * @return: void
+    * @Author: Mr.Wang
+    * @Date: 2019/5/19
+    */
+    public void addMnameRedis(String m_name,List<String> list);
 
 
 }

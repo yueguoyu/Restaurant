@@ -12,9 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ygy
@@ -30,15 +28,26 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
     static HashOperations<String,String, List<String>> operations;
     static HashOperations<String,String,Integer> useroperations;
 
-    //程序启动时自动生成menu表
+    //程序启动时自动生成menu表,m_name表（用于存各个菜的相似度）
     @Override
     public void run(String... strings) throws Exception {
         operations=redisTemplate.opsForHash();
+        useroperations=redisTemplate.opsForHash();
         List<Menu> list = menuMapper.selectByrid("restaurant");
         for (Menu menu : list) {
             //当hashkey没有时才添加数据
             operations.putIfAbsent("menu", menu.getmName(), null);
+            for (Menu menu1:list){
+
+                if (menu.getmName().equals(menu1.getmName())){
+                    continue;
+                }
+                useroperations.putIfAbsent(menu.getmName().getBytes().toString(),menu1.getmName().getBytes().toString(),2);
+                System.out.println(menu.getmName()+":" +menu1.getmName());
+
+            }
         }
+        System.out.println(useroperations.get("酸辣白菜".getBytes().toString(),"韭菜炒鸡蛋".getBytes().toString()));
         System.out.println("redis 创建mean表");
     }
 
@@ -98,6 +107,28 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
         return sum;
     }
 
+public HashMap<String,Integer> sort(HashMap<String,Integer> map){
+    List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+    list.sort(new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+    HashMap<String,Integer> restle=new HashMap<>();
+    for (Map.Entry<String, Integer> mapping : list){
+        System.out.println(mapping.getKey()+": "+mapping.getValue());
+        restle.put(mapping.getKey(),mapping.getValue());
+    }
+    return restle;
+}
 
+    @Override
+    public void addMnameRedis(String m_name,List<String> list) {
+        for (String str:list){
+          int num=useroperations.get(m_name,str);
+            useroperations.put(m_name,str,num+1);
+        }
 
+    }
 }
