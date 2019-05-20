@@ -23,7 +23,7 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table schema="menu" tableName="menu"
+        <table schema="t_order" tableName="t_order"
         enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">

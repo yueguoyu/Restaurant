@@ -83,7 +83,7 @@ public class menuController {
     @ResponseBody
     public List<Menu> selectByrid(String rid){
         JSONObject json=new JSONObject();
-      List<Menu> list=menuDao.selectByrid("13572811105");
+      List<Menu> list=menuDao.selectByrid("restaurant");
       json.put("list",list);
         return list;
     }

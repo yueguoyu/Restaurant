@@ -1,36 +1,34 @@
 package com.ygy.controller;
 
 
-import com.ygy.dao.BuyerCart;
-import com.ygy.dao.OrderDao;
-import com.ygy.model.LineItem;
+
+
+import com.ygy.mapper.TOrderMapper;
 import com.ygy.model.TOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import javax.jws.WebParam;
+import java.util.List;
 
 /**
  * @author ygy
  * @date 2019/4/9 15:01
  */
-@RestController
+@Controller
 public class orderControlle {
     @Autowired
-    OrderDao orderDao;
-    @Autowired
-    BuyerCart buyerCart;
-    @PostMapping("/selectOrder")
-    @ResponseBody
-    public TOrder insertOrder(int tableid,@ModelAttribute LineItem lineItem,@PathVariable("username") String userid){
-        buyerCart.add(userid,lineItem);
-        return orderDao.selectOrderByTableId(tableid);
+    TOrderMapper tOrderMapper;
+    @RequestMapping("/selectOrder")
+    public String selectOrder(Model model){
+   List<TOrder> list=tOrderMapper.selectAll();
+    model.addAttribute("list",list);
+    return "order";
     }
-    @GetMapping("/deleteOrder")
-    public void deleteOrder(int tableid){
-        orderDao.deleteOrderByTableID(tableid);
-    }
-    @PostMapping("/addOrder")
-    public void add(TOrder tOrder){
-        orderDao.addOrder(tOrder);
-    }
+
 
 }

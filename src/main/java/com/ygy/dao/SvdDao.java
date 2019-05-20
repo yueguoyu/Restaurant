@@ -45,6 +45,14 @@ public interface SvdDao {
     * @Date: 2019/5/19
     */
     public void addMnameRedis(String m_name,List<String> list);
+    /**
+    * @Description:  增加点餐数量
+    * @Param: [openid, m_name]
+    * @return: void
+    * @Author: ygy
+    * @Date: 2019/5/20
+    */
+    void addMealNumber(String openid,String m_name);
 
 
 }

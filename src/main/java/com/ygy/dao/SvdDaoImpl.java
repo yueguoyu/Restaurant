@@ -12,6 +12,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -38,16 +40,17 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
             //当hashkey没有时才添加数据
             operations.putIfAbsent("menu", menu.getmName(), null);
             for (Menu menu1:list){
-
                 if (menu.getmName().equals(menu1.getmName())){
                     continue;
                 }
-                useroperations.putIfAbsent(menu.getmName().getBytes().toString(),menu1.getmName().getBytes().toString(),2);
+                String name=getUTF8XMLString(menu.getmName());
+                String name1=getUTF8XMLString(menu1.getmName());
+                useroperations.putIfAbsent(name,name1,0);
                 System.out.println(menu.getmName()+":" +menu1.getmName());
-
             }
         }
-        System.out.println(useroperations.get("酸辣白菜".getBytes().toString(),"韭菜炒鸡蛋".getBytes().toString()));
+
+        System.out.println(useroperations.get(getUTF8XMLString("酸辣白菜"),getUTF8XMLString("米饭")));
         System.out.println("redis 创建mean表");
     }
 
@@ -130,5 +133,28 @@ public HashMap<String,Integer> sort(HashMap<String,Integer> map){
             useroperations.put(m_name,str,num+1);
         }
 
+    }
+//    将String转化成utf-8
+    public static String getUTF8XMLString(String xml) {
+        // A StringBuffer Object
+        StringBuffer sb = new StringBuffer();
+        sb.append(xml);
+        String xmString = "";
+        String xmlUTF8 = "";
+        try {
+            xmString = new String(sb.toString().getBytes("UTF-8"));
+            xmlUTF8 = URLEncoder.encode(xmString, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // return to String Formed
+        return xmlUTF8;
+    }
+
+    @Override
+    public void addMealNumber(String openid, String m_name) {
+        int num=useroperations.get(openid,m_name);
+        useroperations.put(openid,m_name,num+1);
     }
 }

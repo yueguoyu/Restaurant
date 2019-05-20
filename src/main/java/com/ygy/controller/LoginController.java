@@ -1,10 +1,18 @@
 package com.ygy.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ygy.common.HttpClientUtil;
 import com.ygy.common.IMoocJSONResult;
+import com.ygy.common.JsonUtils;
 import com.ygy.common.RedisOperator;
 import com.ygy.dao.*;
+import com.ygy.mapper.TOrderMapper;
 import com.ygy.model.*;
+
+
+import com.ygy.model.TOrder;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,15 +21,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import javax.ws.rs.FormParam;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class LoginController {
-    @Autowired
-    Testygy test;
+//    @Autowired
+//    Testygy test;
    @Autowired
    UserDao userDao;
     @Autowired
@@ -30,11 +41,14 @@ public class LoginController {
     RestaDao restaDao;
     @Autowired
     BuyerCart buyerCart;
-
+    @Autowired
+    TOrderMapper tOrderMapper;
     @Autowired
     private RedisOperator redis;
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    SvdDao svdDao;
 
     static ValueOperations valueOperations;
     WXSessionModel model;
@@ -85,16 +99,25 @@ public class LoginController {
     }
     @PostMapping("/ttt")
     @ResponseBody
-    public String test(@RequestBody JSONObject jsonParam){
+    public String test(@RequestBody JSONObject jsonParam, Model model1) throws IOException {
 //获取订单信息
-        System.out.println(jsonParam.toJSONString());
-        System.out.println(model.getOpenid());
-      myorder myorder= com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),myorder.class);
+        System.out.println("openid:"+model.getOpenid());
+        System.out.println(jsonParam.toJSONString().substring(12,jsonParam.toJSONString().length()-1));
+        String strjson=jsonParam.toJSONString().substring(12,jsonParam.toJSONString().length()-1);
+        TOrder torder=new TOrder();
+        torder.setoId(model.getOpenid());
+        torder.setJson(jsonParam.toJSONString());
+        tOrderMapper.insert(torder);
 
+
+//        com.alibaba.fastjson.JSONObject Jbject= com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString());
 
 //        放入redis进行svd计算   redis存储+进行svd计算+打印输出订单
+//        svdDao.add();
         return jsonParam.toJSONString();
     }
+
+
     @GetMapping("/home")
     public String login(Model model){
         Restaurant restaurant=new Restaurant();
