@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ygy
@@ -29,6 +31,8 @@ public interface SvdDao {
     * @Date: 2019/5/17
     */
     void add(String mname,List<String> list);
+
+    List<String> get(String mname);
     /** 
     * @Description: 创建用户hash表，存储用户点单次数
     * @Param: [name] 
@@ -54,5 +58,11 @@ public interface SvdDao {
     */
     void addMealNumber(String openid,String m_name);
 
+    boolean hasekey(String openid,String mname);
+     void addsimilarity(String name1,String name2,double num);
+    List<Map.Entry<String, Integer>> sort(HashMap<String,Integer> map);
 
+    Map<String,Integer> getopenid(String openid);
+
+    Map<String,Integer>  getmenuid(String menukey);
 }

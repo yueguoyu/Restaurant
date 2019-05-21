@@ -12,11 +12,16 @@ import com.ygy.mapper.TOrderMapper;
 import com.ygy.model.*;
 
 
-import com.ygy.model.TOrder;
+
 import net.minidev.json.JSONObject;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.spark.sql.sources.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.jws.WebParam;
 import javax.ws.rs.FormParam;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class LoginController {
@@ -51,7 +54,8 @@ public class LoginController {
     SvdDao svdDao;
 
     static ValueOperations valueOperations;
-    WXSessionModel model;
+   private WXSessionModel model;
+    private Remarks remarks;
     @PostMapping("/wxLogin")
     @ResponseBody
     public IMoocJSONResult wxLogin(String code) {
@@ -91,29 +95,62 @@ public class LoginController {
     public String ttt(@RequestBody JSONObject jsonParam){
 
         System.out.println(jsonParam.toJSONString());
-        Remarks remarks=  com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),Remarks.class);
+        remarks=  com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString(),Remarks.class);
 //获取备注
         System.out.println("remarks:"+remarks.getRemarks());
 
         return "";
     }
-    @PostMapping("/ttt")
+    @PostMapping("/submission")
     @ResponseBody
     public String test(@RequestBody JSONObject jsonParam, Model model1) throws IOException {
 //获取订单信息
         System.out.println("openid:"+model.getOpenid());
         System.out.println(jsonParam.toJSONString().substring(12,jsonParam.toJSONString().length()-1));
-        String strjson=jsonParam.toJSONString().substring(12,jsonParam.toJSONString().length()-1);
-        TOrder torder=new TOrder();
-        torder.setoId(model.getOpenid());
-        torder.setJson(jsonParam.toJSONString());
-        tOrderMapper.insert(torder);
+
+
+       String jsonstr= jsonParam.toJSONString().substring(24,jsonParam.toJSONString().length()-2);
+       List<Myorder> myorders=JsonUtils.myjsonList(jsonstr);
+        String filename= RandomStringUtils.randomAlphanumeric(10);
+       for (Myorder myorder:myorders){
+            TOrder t=new TOrder();
+            t.setName(myorder.getName());
+            t.setDetail(myorder.getDetail());
+            t.setSum(myorder.getSum());
+            t.setNumber(myorder.getNumber());
+            t.setPrice(myorder.getPrice());
+           Date now = new Date();
+           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
+           t.setTime(dateFormat.format( now ));
+            t.setOrdernumber(filename);
+            t.setRemarks(remarks.getRemarks());
+           tOrderMapper.insert(t);
+       }
+//      将新用户加到menu表中
+       for (Myorder myorder:myorders){
+           if (!svdDao.hasekey(model.getOpenid(),myorder.getName())){
+           List<String> list=svdDao.get(myorder.getName());
+            if (list==null){
+                List<String> newlist=new ArrayList<>();
+                newlist.add(model.getOpenid());
+                svdDao.add(myorder.getName(),newlist);
+            }else {
+                list.add(model.getOpenid());
+                svdDao.add(myorder.getName(),list);
+            }
+
+           }else {
+               continue;
+           }
+// 用户点餐后openid 表对应的值+1
+           svdDao.addMealNumber(model.getOpenid(),myorder.getName());
+       }
 
 
 //        com.alibaba.fastjson.JSONObject Jbject= com.alibaba.fastjson.JSONObject.parseObject(jsonParam.toJSONString());
 
 //        放入redis进行svd计算   redis存储+进行svd计算+打印输出订单
-//        svdDao.add();
+//       svdDao.get("");
         return jsonParam.toJSONString();
     }
 
@@ -165,6 +202,20 @@ public class LoginController {
         Menu menu=new Menu();
         model.addAttribute(menu);
         return "upload";
+    }
+    @Scheduled(cron ="0 0 3 * * ?")
+    public void recommend(){
+
+       HashMap<String,Integer> map= (HashMap<String, Integer>) svdDao.getopenid(model.getOpenid());
+        List<Map.Entry<String, Integer>> list=svdDao.sort(map);
+       Map.Entry<String, Integer> ment=list.get(0);
+       String menukey=ment.getKey();
+        List<Map.Entry<String, Integer>> menulist=svdDao.sort((HashMap<String, Integer>)svdDao.getmenuid(menukey));
+
+        for (Map.Entry<String, Integer> mapping : menulist){
+            System.out.println(mapping.getKey()+": "+mapping.getValue());
+            redisTemplate.opsForZSet().add("recommend",mapping.getKey(),mapping.getValue());
+        }
     }
 
 }

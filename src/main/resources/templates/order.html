@@ -11,8 +11,10 @@
 <body>
 <table border="1">
     <tr th:each="m : ${list}"><!-- 其中m是个临时变量，像for(User u : userList)那样中的u-->
-        <td th:text="${m.json}"/>
+        <td th:text="${m.name}"/>
+        <td th:text="${m.detail}"></td>
     </tr>
 </table>
 </body>
+
 </html>

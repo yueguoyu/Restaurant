@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +30,14 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
     MenuMapper menuMapper;
     static HashOperations<String,String, List<String>> operations;
     static HashOperations<String,String,Integer> useroperations;
-
+    static ZSetOperations<String,Integer> zSetOperations;
     //程序启动时自动生成menu表,m_name表（用于存各个菜的相似度）
     @Override
     public void run(String... strings) throws Exception {
         operations=redisTemplate.opsForHash();
         useroperations=redisTemplate.opsForHash();
+        zSetOperations=redisTemplate.opsForZSet();
+
         List<Menu> list = menuMapper.selectByrid("restaurant");
         for (Menu menu : list) {
             //当hashkey没有时才添加数据
@@ -56,6 +59,7 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
 
 
 
+
     @Override
     public void add(String mname,List<String> openidlist){
         operations=redisTemplate.opsForHash();
@@ -69,6 +73,17 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
             operations.put("menu",mname, openidlist);
         }
     }
+
+    @Override
+    public List<String> get(String mname) {
+        operations=redisTemplate.opsForHash();
+        if (operations.hasKey("menu",mname)){
+         return    operations.get("menu",mname);
+        }else {
+            return null;
+        }
+    }
+
     @Override
     public boolean addOpidTable(String openid) {
         try {
@@ -109,8 +124,8 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
         sum=num1*num1+num2*num2;
         return sum;
     }
-
-public HashMap<String,Integer> sort(HashMap<String,Integer> map){
+@Override
+public List<Map.Entry<String, Integer>> sort(HashMap<String,Integer> map){
     List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
     list.sort(new Comparator<Map.Entry<String, Integer>>() {
                 @Override
@@ -123,7 +138,7 @@ public HashMap<String,Integer> sort(HashMap<String,Integer> map){
         System.out.println(mapping.getKey()+": "+mapping.getValue());
         restle.put(mapping.getKey(),mapping.getValue());
     }
-    return restle;
+    return list;
 }
 
     @Override
@@ -154,7 +169,37 @@ public HashMap<String,Integer> sort(HashMap<String,Integer> map){
 
     @Override
     public void addMealNumber(String openid, String m_name) {
-        int num=useroperations.get(openid,m_name);
-        useroperations.put(openid,m_name,num+1);
+
+        if (!useroperations.hasKey(openid,m_name)){
+            useroperations.put(openid,m_name,0);
+        }else {
+            int num=useroperations.get(openid,m_name);
+            useroperations.put(openid,m_name,num+1);
+        }
+
+    }
+
+    @Override
+    public boolean hasekey(String openid, String mname) {
+        if (useroperations.hasKey(openid,mname)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public void addsimilarity(String name1, String name2, double num) {
+        useroperations.put(name1,name2,(int)num);
+    }
+
+    @Override
+    public Map<String, Integer> getopenid(String openid) {
+        return useroperations.entries(openid);
+    }
+
+    @Override
+    public Map<String, Integer> getmenuid(String menukey) {
+        return useroperations.entries(menukey);
     }
 }

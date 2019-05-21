@@ -1,10 +1,17 @@
 package com.ygy.common;
 
+
+import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ygy.model.Myorder;
+import com.ygy.model.TOrder;
+import com.ygy.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 
@@ -75,6 +82,27 @@ public class JsonUtils {
 		}
     	
     	return null;
+    }
+    /** 将json转换成对象
+    * @Description:
+    * @Param: [json]
+    * @return: void
+    * @Author: ygy
+    * @Date: 2019/5/21
+    */
+    public static   List<Myorder>   myjsonList(String json){
+        JSONArray jsonArray = JSONArray.parseArray(json);
+        ArrayList<Myorder> users = new ArrayList<Myorder>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            Myorder user=new Myorder();
+            user.setName(jsonArray.getJSONObject(i).getString("name"));
+            user.setDetail(jsonArray.getJSONObject(i).getString("detail"));
+            user.setPrice(jsonArray.getJSONObject(i).getString("price"));
+            user.setSum(jsonArray.getJSONObject(i).getString("sum"));
+            user.setNumber(jsonArray.getJSONObject(i).getString("number"));
+            users.add(user);
+        }
+        return users;
     }
     
 }
