@@ -157,6 +157,15 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectAll" resultMap="BaseResultMap">
-    select * from t_order;
+    select * from t_order order by t_order.id desc ;
+  </select>
+  <select id="selectByOpenid" resultMap="BaseResultMap" parameterType="String">
+    select * from t_order where ordernumber=#{ordernumber};
+  </select>
+  <select id="selectByTime" resultMap="BaseResultMap" parameterType="String">
+    select * from t_order where t_order.time like #{time}"%";
+  </select>
+  <select id="selectByNumber" resultMap="BaseResultMap" parameterType="String">
+    select * from t_order where t_order.ordernumber=#{ordernumber};
   </select>
 </mapper>

@@ -103,12 +103,13 @@ public class LoginController {
     }
     @PostMapping("/submission")
     @ResponseBody
-    public String test(@RequestBody JSONObject jsonParam, Model model1) throws IOException {
+    public TOrder test(@RequestBody JSONObject jsonParam, Model model1) throws IOException {
 //获取订单信息
         System.out.println("openid:"+model.getOpenid());
         System.out.println(jsonParam.toJSONString().substring(12,jsonParam.toJSONString().length()-1));
 
-
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
        String jsonstr= jsonParam.toJSONString().substring(24,jsonParam.toJSONString().length()-2);
        List<Myorder> myorders=JsonUtils.myjsonList(jsonstr);
         String filename= RandomStringUtils.randomAlphanumeric(10);
@@ -119,8 +120,7 @@ public class LoginController {
             t.setSum(myorder.getSum());
             t.setNumber(myorder.getNumber());
             t.setPrice(myorder.getPrice());
-           Date now = new Date();
-           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
+           //可以方便地修改日期格式
            t.setTime(dateFormat.format( now ));
             t.setOrdernumber(filename);
             t.setRemarks(remarks.getRemarks());
@@ -151,7 +151,10 @@ public class LoginController {
 
 //        放入redis进行svd计算   redis存储+进行svd计算+打印输出订单
 //       svdDao.get("");
-        return jsonParam.toJSONString();
+        TOrder re=new TOrder();
+       re.setTime(dateFormat.format( now ));
+       re.setOrdernumber(filename);
+        return re;
     }
 
 
@@ -161,7 +164,7 @@ public class LoginController {
         User user=new User();
         model.addAttribute(user);
         model.addAttribute(restaurant);
-        return "login";
+        return "index";
     }
 
     @PostMapping("/signIn")

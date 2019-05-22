@@ -49,7 +49,7 @@ public class menuController {
             String menuid= s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
             try {
                 byte[] bytes= file.getBytes();
-                File f=new File("E:\\image\\");
+                File f=new File("E:\\images\\");
                 if (!f.exists()){
                     f.mkdirs();
                 }

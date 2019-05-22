@@ -94,7 +94,7 @@ public class OssclientUtilDaoImpl implements OssclientUtilDao {
     @Override
     public String getSignedUrl(String key) {
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-        String style = "image/resize,m_fixed,w_100,h_100/rotate,90";
+        String style = "images/resize,m_fixed,w_100,h_100/rotate,90";
         Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 10);
         GeneratePresignedUrlRequest req = new GeneratePresignedUrlRequest("yueguoyu", key, HttpMethod.GET);
         req.setExpiration(expiration);
@@ -106,7 +106,7 @@ public class OssclientUtilDaoImpl implements OssclientUtilDao {
 
     @Override
     public String getSimpleUrl(String username, MultipartFile file) {
-        String url = username + "/image/" + file.getOriginalFilename();
+        String url = username + "/images/" + file.getOriginalFilename();
         return url;
     }
 

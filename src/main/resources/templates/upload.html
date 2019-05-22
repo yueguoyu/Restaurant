@@ -16,10 +16,28 @@
         .radio{display: inline-block; width: 15%; height: 20px; margin: 0 auto; text-align: center;}
         .warp{display: block; width: 100%; height: auto;  background: url(http://localhost:8080/image/pic2.jpg) no-repeat;}
         .content{width: 1000px; height: auto;}
+        .left h3{color: #dbe3f9;}
+        .left{display: block; float: left; width: 270px; height: 100%; position: absolute; top: 0px; left: 0px; background-color: #4066d4; }
+        .left ul{display: block; width: 270px;  list-style: none; padding: 0px !important; margin-top: 40px; }
+        .left ul li{display: block; width: 100%; height: 60px; margin-bottom: 2px; text-align: center; }
+        .left ul li a{font-size: 15px; color: #dbe3f9; line-height: 60px; font-weight: bold;}
+        .left ul li:hover{background-color: #FF0000;}
+        .on{background-color: #FF0000 !important;}
+        .top{width: 100%; height: 100px; background-color: blue;}
     </style>
+
 </head>
 <body >
 <div class="warp">
+    <div class="left">
+        <h3>管理平台</h3>
+        <ul>
+            <li ><a href="/home">首      页</a></li>
+            <li class="on"><a href="/ttt">管理平台</a></li>
+            <li><a href="/home">管理平台</a></li>
+            <li><a href="/home">管理平台</a></li>
+        </ul>
+    </div>
     <div class="container content">
         <div class="row clearfix">
             <div class="col-md-12 column">

@@ -53,4 +53,8 @@ public interface TOrderMapper {
      */
     int updateByPrimaryKey(TOrder record);
     List<TOrder> selectAll();
+    List<TOrder> selectByOpenid(String ordernumber);
+    List<TOrder> selectByTime(String time);
+    List<TOrder> selectByNumber(String ordernumber);
+
 }
