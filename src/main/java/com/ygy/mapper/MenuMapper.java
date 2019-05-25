@@ -52,7 +52,8 @@ public interface MenuMapper {
      * @mbggenerated Sun May 12 11:29:17 CST 2019
      */
     int updateByPrimaryKey(Menu record);
-
+    void deleMenuByname(String mname);
     Menu selectByidandmid(String rid,String mid);
     List<Menu> selectByrid(String rid);
+    Menu selectByname(String mname);
 }

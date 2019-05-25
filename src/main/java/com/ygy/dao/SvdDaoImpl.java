@@ -93,6 +93,7 @@ public class SvdDaoImpl implements  SvdDao, CommandLineRunner {
                 //当hashkey没有时才添加数据
                 useroperations.putIfAbsent(openid, menu.getmName(), 0);
             }
+            System.out.println("redis中添加openid表");
             return true;
         }catch (Exception e){
             e.printStackTrace();

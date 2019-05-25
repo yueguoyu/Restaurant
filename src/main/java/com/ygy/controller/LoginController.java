@@ -17,20 +17,23 @@ import net.minidev.json.JSONObject;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.spark.sql.sources.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.data.redis.core.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.jws.WebParam;
+import javax.print.DocFlavor;
 import javax.ws.rs.FormParam;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class LoginController {
@@ -52,8 +55,10 @@ public class LoginController {
     RedisTemplate redisTemplate;
     @Autowired
     SvdDao svdDao;
-
+@Autowired
+MenuDao menuDao;
     static ValueOperations valueOperations;
+    private HashOperations<String,String,Restaurant> hashOperations;
    private WXSessionModel model;
     private Remarks remarks;
     @PostMapping("/wxLogin")
@@ -86,6 +91,22 @@ public class LoginController {
         valueOperations.set("openid:"+model.getOpenid(),model.getSession_key(),1000 * 60 * 30);
 //获取openid
         System.out.println(model.getOpenid());
+//        创建openid redis表
+
+      String remname=  menuDao.selectByrid("restaurant").get(0).getmName();
+      if (!svdDao.hasekey(model.getOpenid(),remname)){
+          svdDao.addOpidTable(model.getOpenid());
+      }
+    HashMap<String,Integer> map=(HashMap<String, Integer>) svdDao.getopenid(model.getOpenid());
+      ZSetOperations<String,String> zsetOperations=redisTemplate.opsForZSet();
+
+        List<Map.Entry<String, Integer>> listsvd=svdDao.sort(map);
+
+          HashMap<String,Integer> map2=(HashMap<String, Integer>)svdDao.getmenuid(listsvd.get(0).getKey());
+            List<Map.Entry<String, Integer>> entries=svdDao.sort(map2);
+            for (Map.Entry<String, Integer> integerEntry:entries){
+                    zsetOperations.add("recommendMenu",integerEntry.getKey(),integerEntry.getValue());
+            }
         return IMoocJSONResult.ok();
     }
 
@@ -123,7 +144,11 @@ public class LoginController {
            //可以方便地修改日期格式
            t.setTime(dateFormat.format( now ));
             t.setOrdernumber(filename);
-            t.setRemarks(remarks.getRemarks());
+            if (remarks.getRemarks()!=null){
+                t.setRemarks(remarks.getRemarks());
+            }else {
+                t.setRemarks("null");
+            }
            tOrderMapper.insert(t);
        }
 //      将新用户加到menu表中
@@ -169,8 +194,12 @@ public class LoginController {
 
     @PostMapping("/signIn")
     public  String signIn(@ModelAttribute Restaurant restaurant,Model model){
+
+
+
         try {
-            String pass = restaDao.selectByid(restaurant.getrId()).getPass();
+            Restaurant restaurant1 = restaDao.selectByid(restaurant.getrId());
+            String pass=restaurant1.getPass();
             if (pass == null) {
                 model.addAttribute("erro", "请注册用户！");
                 return "login";
@@ -179,32 +208,105 @@ public class LoginController {
             model.addAttribute(menu);
             if (pass.equals(restaurant.getPass())) {
                 model.addAttribute("RestaId", "restaurant");
-                return "upload";
+                System.out.println("dsads:"+restaurant1.getAddress());
+//放入缓存
+                hashOperations=redisTemplate.opsForHash();
+                hashOperations.put("mysession","mysession",restaurant1);
+                model.addAttribute("topimg",hashOperations.get("mysession","mysession").getAddress());
+                model.addAttribute("rome","all");
+                return "index";
             } else {
                 model.addAttribute("erro", "用户名或密码错误");
-                return "login";
+                return "index";
             }
         }catch (Exception e){
             e.printStackTrace();
             model.addAttribute("erro", "请注册用户！");
-            return "login";
+            return "index";
         }
+
+    }
+    @RequestMapping("/login/upload")
+    public  String upload(Model model){
+        try {
+            Restaurant restaurant=new Restaurant();
+            Menu menu = new Menu();
+            model.addAttribute(menu);
+            model.addAttribute("RestaId", "restaurant");
+            model.addAttribute(restaurant);
+            hashOperations = redisTemplate.opsForHash();
+            if (hashOperations.hasKey("mysession", "mysession")) {
+                model.addAttribute("topimg",hashOperations.get("mysession","mysession").getAddress());
+                return "upload";
+            } else {
+                model.addAttribute("erro1", "登录后才能上传菜单！");
+                return "index";
+            }
+        }catch (Exception e){
+
+            return "index";
+        }
+
     }
 
     @PostMapping("/register")
-    public  String  register(@ModelAttribute Restaurant restaurant){
-        if (restaurant!=null){
-            restaDao.addResta(restaurant);
+    public  String  register(@ModelAttribute Restaurant restaurant,Model model,@RequestParam("file") MultipartFile file){
+        // 判断文件是否为空
+        String url="";
+        if (!file.isEmpty()) {
+            String filename = file.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
+            String s = uuid.toString();
+            String menuid = s.substring(0, 8) + s.substring(9, 13) + s.substring(14, 18) + s.substring(19, 23) + s.substring(24);
+            try {
+                byte[] bytes = file.getBytes();
+                File f = new File("E:\\images\\");
+                if (!f.exists()) {
+                    f.mkdirs();
+                }
+                String path = f.getCanonicalPath() + "/" + filename;
+                File file1 = new File(path);
+                FileOutputStream outputStream = new FileOutputStream(file1);
+                outputStream.write(bytes);
+                outputStream.close();
+                url = ossclientUtilDao.fileUplodnew(path, filename, "img/ygy/");
+                file1.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-            return "login";
+        Restaurant newre=new Restaurant();
+        newre.setAddress(url);
+        newre.setrId(restaurant.getrId());
+        newre.setName(restaurant.getName());
+        newre.setrPhone(restaurant.getrPhone());
+        newre.setPass(restaurant.getPass());
+
+                try {
+              restaDao.addResta(newre);
+                }catch (Exception e){
+                    model.addAttribute("erro1","该用户已经注册");
+                }
+        model.addAttribute("topimg",newre.getAddress());
+                model.addAttribute("iftop.class",".iftop");
+        return "index";
     }
 
 
     @GetMapping("/hello")
     public String hello(Model model){
-        Menu menu=new Menu();
-        model.addAttribute(menu);
-        return "upload";
+        Restaurant restaurant=new Restaurant();
+//        User user=new User();
+//        model.addAttribute(user);
+        model.addAttribute(restaurant);
+        model.addAttribute("rome","all");
+        HashOperations<String,String,Restaurant> hashOperations=redisTemplate.opsForHash();
+        if (!hashOperations.hasKey("mysession","mysession")){
+
+            return "index";
+        }
+        model.addAttribute("topimg",hashOperations.get("mysession","mysession").getAddress());
+        return "index";
     }
     @Scheduled(cron ="0 0 3 * * ?")
     public void recommend(){

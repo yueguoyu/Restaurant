@@ -231,4 +231,11 @@
   <select id="selectByrid" parameterType="String" resultMap="BaseResultMap">
     select * from  menu where resta_id=#{rid};
   </select>
+  <delete id="deleMenuByname" parameterType="String">
+      delete from menu
+    where menu.m_name = #{mname,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByname" parameterType="String" resultMap="BaseResultMap">
+    select * from  menu where menu.m_name=#{mname};
+  </select>
 </mapper>

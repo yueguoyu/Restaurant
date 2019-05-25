@@ -2,11 +2,16 @@ package com.ygy.controller;
 
 import com.ygy.dao.MenuDao;
 import com.ygy.dao.SvdDao;
+import com.ygy.mapper.MenuMapper;
 import com.ygy.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -22,6 +27,10 @@ public class ScheduledTasks {
     SvdDao svdDao;
     @Autowired
     MenuDao menuDao;
+    @Autowired
+    RedisTemplate redisTemplate;
+    @Autowired
+    MenuMapper menuMapper;
     @Scheduled(cron ="0 0 3 * * ?")
     public void similarity(){
       List<Menu> list=menuDao.selectByrid("restaurant");
@@ -36,4 +45,13 @@ public class ScheduledTasks {
           }
       }
     }
+//    每天的0点、13点、18点、21点都执行一次
+    @Scheduled(cron = "0 0 0,14,18,21 * * ?")
+    public void selctallSched(){
+        HashOperations<String,String,List<Menu>> hashOperations=redisTemplate.opsForHash();
+        List<Menu> list=menuMapper.selectByrid("restaurant");
+        hashOperations.put("restaurant","restaurant",list);
+        System.out.println("定时任务执行");
+    }
+
 }

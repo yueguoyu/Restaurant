@@ -33,14 +33,8 @@ public class RestaDaoImpl implements RestaDao {
     @Transactional(rollbackFor = Exception.class)
     public boolean addResta(Restaurant restaurant) {
         boolean rest=false;
-            try {
+
                 restaurantMapper.insert(restaurant);
-            }catch (Exception e){
-                e.printStackTrace();
-                logger.error("addResta出错",e);
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                rest=true;
-            }
         return rest;
     }
     /** 

@@ -52,102 +52,133 @@
         .ul_list a{text-align: center; margin-top: 10px; display: block; margin: 0 auto; margin-bottom: 20px;}
         .submint{background-color: #FF7F50; text-align: center; font-size: 22px; color: #FFFF;}
         .erro_p{font-size: 15px; color: red;}
-
+        .detail,.menuname{position: absolute; left: 0px; top: 0px;}
+        h1{margin-left: 50px;}
+        .pr{position: relative;}
+        .time{position: absolute; bottom: 25px; right: 22px; font-size: 20px;}
+        label{font-size: 20px}
+        .topimg{margin-right:20px; margin-top:10px; display: block; width: 30px; height: 30px; border-radius:50%; z-index: 999; z-index: 999;}
+        h1{margin-left: 50px;}
+        .pr{position: relative;}
+        .time{position: absolute; bottom: 25px; right: 22px; font-size: 20px;}
+        label{font-size: 20px}
+        .topimg{margin-right: 20px; margin-top: 10px; display: block; width: 30px; height: 30px; border-radius: 50%; z-index: 999; z-index: 999;}
+        table{display: block; width: 100%; height: 150px; font-size: 20px;}
+        table th,table td{width: 160px; text-align: center; height: 60px;}
+        table th{color: #FF7F50;}
+        .div_table_th1{display: block; margin-left: 120px; line-height: 60px;}
+        .td_img{display: block; position: absolute; top: 28px; left: 20px; border-radius: 10%;}
+        .div_td{display: block; margin-left: 120px; line-height: 28px; margin-top: 25px;}
+        .btn_remove{position: absolute; bottom: 10px; right: 20px;}
+        .btn_update{position: absolute; bottom: 10px; right: 100px;}
+        #pop{left: 32% !important; top: 39% !important;}
+        .img_box{    width: 100px;   height: 100px; position: absolute; top: 10px; left: 0px;}
+        .file{display: block; width: 126px; height: 124px;}
+        .btn_login{margin-right: 20px; float: right;}
     </style>
 
 </head>
 <body>
 <div class="container">
-<div class="row clearfix">
-    <div class="col-md-12 column">
-        <nav class="navbar navbar-default navbar-inverse" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
-                        class="icon-bar"></span>
-                    <span class="icon-bar"></span></button>
-                <a class="navbar-brand" href="#">点餐系统</a>
-            </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                            class="icon-bar"></span>
+                        <span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="index.html">点餐系统</a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li >
-                        <a href="index.html" class="glyphicon glyphicon-home">Home</a>
-                    </li>
-                    <li class="active">
-                        <a href="#"  class="glyphicon glyphicon-book">Order</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu<strong
-                                class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="essay/cate?cateName=java">add</a>
-                            </li>
-                            <li>
-                                <a href="#">delete</a>
-                            </li>
-                            <li>
-                                <a href="#">update</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left"  role="search" action="/selectOrder/select" method="get" >
-                    <div class="form-group">
-                        <input type="text"   class="form-control" name="title"/>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/hello" class="glyphicon glyphicon-home">Home</a>
+                        </li>
+                        <li class="active dropdown">
+                            <a href=""  class="dropdown-toggle" data-toggle="dropdown">Order</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/selectOrder">new</a>
+                                </li>
+                                <li>
+                                    <a href="/selectOrderAll">all</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu<strong
+                                    class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/login/upload">add</a>
+                                </li>
+                                <li>
+                                    <a href="/selectmenuPc">all</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left"  role="search" action="/selectOrder/select" method="get" >
+                        <div class="form-group">
+                            <input type="text"   class="form-control" name="title"/>
+                        </div>
+                        <button class="btn btn-default">submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right ul1" >
+                        <li><img class="topimg" th:src="${topimg}" src="https://yueguoyu.oss-cn-beijing.aliyuncs.com/image/img1.png"></li>
+                        <li style="display: none;">
+                            <a href="javascript:TGDialogS('pop');" onClick="TGDialogS('pop')">登录</a>
+                        </li>
+                        <li class="pr" style="display: none;">
+                            <a  class="ul1_li" href="javascript:TGDialogS('pop1');" onClick="TGDialogS('pop1')">注册</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+            <dl>
+                <dt th:each="m1 : ${list1}" class="">
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h1 th:text="${m1.ordernumber}"></h1>
+                        <p th:text="${m1.name}"></p>
+                        <p th:text="${m1.detail}"></p>
+                        <p th:text="${m1.time}"></p>
+                        <p th:text="${m1.remarks}"></p>
                     </div>
-                    <button class="btn btn-default">submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right ul1" style="display: none;">
-                    <li>
-                        <a href="javascript:TGDialogS('pop');" onClick="TGDialogS('pop')">登录</a>
-                    </li>
-                    <li class="pr">
-                        <a  class="ul1_li" href="javascript:TGDialogS('pop1');" onClick="TGDialogS('pop1')">注册</a>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
-        <dl>
-            <dt th:each="m1 : ${list1}" class="jumbotron well">
-                <div>
-                    <h1 th:text="${m1.ordernumber}">qqqq
-                    </h1>
-                    <p th:text="${m1.name}">
-
-                        This is a template for a simple marketing or informational website. It includes a large
-                        callout called the hero unit and three supporting pieces of content. Use it as a starting
-                        point to create something more unique.
-                    </p>
-                    <p th:text="${m1.detail}"></p>
-                    <p th:text="${m1.time}"></p>
-                    <p th:text="${m1.remarks}"></p>
-                </div>
-            </dt>
-        </dl>
-        <dl>
-            <dt th:each="m : ${list}" class="jumbotron well">
-                <div>
-                    <h1 th:text="${m.ordernumber}">qqqq
-                    </h1>
-                    <p th:text="${m.name}">
-
-                        This is a template for a simple marketing or informational website. It includes a large
-                        callout called the hero unit and three supporting pieces of content. Use it as a starting
-                        point to create something more unique.
-                    </p>
-                    <p th:text="${m.detail}"></p>
-                    <p th:text="${m.time}"></p>
-                </div>
-            </dt>
-        </dl>
+                </dt>
+            </dl>
+            <dl>
+                <dt th:each="m : ${list}" class="">
 
 
+                    <div class="alert alert-success alert-dismissable pr">
+                        <button type="submit" class="close" data-dismiss="alert" aria-hidden="true"><a  href="/deletemenu">×</a></button>
+                        <table>
+                            <tr>
+                                <th >订单号</th>
+                                <th>菜名和数量</th>
+                                <th>总价（元）</th>
+                                <th>备注1</th>
+                                <th>备注2</th>
+                            </tr>
+                            <tr>
+                                <td><p th:text="${m.ordernumber}">1111</p></td>
+                                <td><p th:text="${m.name}">111</p></td>
+                                <td><p th:text="${m.price}">11</p></td>
+                                <td><p th:text="${m.detail}">111</p></td>
+                                <td><p th:text="${m.remarks}">111</p></td>
+                            </tr>
+                        </table>
+                        <p class="time" th:text="${m.time}">11111</p>
+                    </div>
+                </dt>
+            </dl>
+        </div>
     </div>
-</div>
 </div>
 </body>
 

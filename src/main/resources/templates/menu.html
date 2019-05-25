@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="webjars/jquery/3.1.1/jquery.min.js"></script>-->
+    <!--<script src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" />-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        ul li{ list-style-type: none;}
+        .imgd{display: block; width: 100%; height: 600px !important;}
+        .ul1_li{position: absolute; right: 0px; top: 0px;}
+        .pr{position: relative;}
+        .ma{margin: 0 auto;}
+        body{display: block; width: 100%; height: 100%; background: url(http://localhost:8080/image/pic1.jpg) no-repeat;}
+        .login{display: block; width: 455px; height: 440px; margin: 0 auto; padding-top: 300px;}
+        h2{display: block; margin: 0 auto; width: 100%; text-align: center; color: #ffffff;}
+        .btn1{display: block; width: 100%; height: 55px; background-color: aqua;}
+        .btn2{display: block; width: 100%; height: 55px; background-color: coral; margin-top: 10px; text-align: center;}
+        input{ display: inline-block; background: #fff;}
+        .dialog{display: block; background: beige;}
+        .xiao-goLogin-box{ position: absolute; width: 150px; height: 20px; margin-top: 400px; margin-left: 320px;}
+        .dia-close{position: absolute; top: 208px; right: -47px; font-size: 50px;}
+        .dia-close1{position: absolute; top: -48px; right: -47px; font-size: 50px;}
+        h3{text-align: center; padding-top: 20px;}
+        #warning{ position: absolute; color: red; font-size: 20px; font-weight: normal; font-style: normal; text-decoration: none;}
+        .box{display: block; margin-top: 80px; height: 35px; width: 290px;}
+        .ul_list{width: 520px; height: auto; margin: 0 auto;}
+        .ul_list li{display: block; margin-top: 30px;}
+        .ul_list input{display: block; width: 90%; border-radius: 25px; height: 45px; border-color: bisque;}
+        .ul_list a{text-align: center; margin-top: 10px; display: block; margin: 0 auto; margin-bottom: 20px;}
+        .submint{background-color: #FF7F50; text-align: center; font-size: 22px; color: #FFFF;}
+        .erro_p{font-size: 15px; color: red;}
+        .detail,.menuname{position: absolute; left: 0px; top: 0px;}
+        h1{margin-left: 50px;}
+        .pr{position: relative;}
+        .time{position: absolute; bottom: 25px; right: 22px; font-size: 20px;}
+        label{font-size: 20px}
+        .topimg{margin-right: 20px; margin-top: 10px; display: block; width: 30px; height: 30px; border-radius: 50%; z-index: 999; z-index: 999;}
+        table{display: block; width: 100%; height: 150px; font-size: 20px;}
+        table th,table td{width: 120px; text-align: center; height: 60px;}
+        .div_table_th1{display: block; margin-left: 120px; line-height: 60px;}
+        .td_img{display: block; position: absolute; top: 28px; left: 20px; border-radius: 10%;}
+        .div_td{display: block; margin-left: 120px; line-height: 28px; margin-top: 25px;}
+        .btn_remove{position: absolute; bottom: 10px; right: 20px;}
+        .btn_update{position: absolute; bottom: 10px; right: 100px;}
+        #pop{left: 32% !important; top: 39% !important;}
+        .img_box{    width: 100px;   height: 100px; position: absolute; top: 10px; left: 0px;}
+        .file{display: block; width: 126px; height: 124px;}
+        .btn_login{margin-right: 20px; float: right;}
+    </style>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                            class="icon-bar"></span>
+                        <span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="index.html">点餐系统</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/hello" class="glyphicon glyphicon-home">Home</a>
+                        </li>
+                        <li >
+                            <a href="/selectOrder" class="glyphicon glyphicon-book">Order</a>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/login/upload">add</a>
+                                </li>
+                                <li>
+                                    <a href="/selectmenuPc">all</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search" action="/selectOrder/select" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="title" />
+                        </div>
+                        <button class="btn btn-default">submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right ul1">
+                        <li><img class="topimg" th:src="${topimg}" src="https://yueguoyu.oss-cn-beijing.aliyuncs.com/image/img1.png"></li>
+                        <li style="display: none;">
+                            <a href="javascript:TGDialogS('pop');" onClick="TGDialogS('pop')">登录</a>
+                        </li>
+                        <li class="pr" style="display: none;">
+                            <a class="ul1_li" href="javascript:TGDialogS('pop1');" onClick="TGDialogS('pop1')">注册</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+            <dl>
+                <dt th:each="m : ${list}" class="">
+
+                    <div class="alert alert-success alert-dismissable pr">
+                        <button type="submit" class="close" data-dismiss="alert" aria-hidden="true"><a  href="/deletemenu">×</a></button>
+                        <form class="navbar-form navbar-left"  role="search" action="/deletemenu" method="get" >
+                            <div class="form-group">
+                                <input style="display: none" type="text" th:value="${m.mName}"  class="form-control" name="title"/>
+                            </div>
+                            <button class="btn btn-default btn_remove">删除</button>
+                        </form>
+                        <button class="btn btn-default btn_update" onclick="TGDialogS('pop')">修改</button>
+                        <img class="td_img" th:src="${m.imgurl}" src="https://yueguoyu.oss-cn-beijing.aliyuncs.com/img/ygy/pic13.jpg" width="100" height="100"/>
+                        <table>
+                            <tr>
+                                <th class="div_table_th1">名字</th>
+                                <th>天气</th>
+                                <th>季节</th>
+                                <th>冷热</th>
+                                <th>辣度</th>
+                                <th>酸度</th>
+                                <th>甜度</th>
+                                <th>苦度</th>
+                                <th>种类</th>
+                                <th>价格</th>
+                            </tr>
+                            <tr>
+                                <td class="div_td"><p th:text="${m.mName}"></p></td>
+                                <td><p th:text="${m.weather}"></p></td>
+                                <td><p th:text="${m.season}"></p></td>
+                                <td><p th:text="${m.hotcold}"></p></td>
+                                <td><p th:text="${m.menuHot}"></p></td>
+                                <td><p th:text="${m.menuAcid}"></p></td>
+                                <td><p th:text="${m.menuSweet}"></p></td>
+                                <td><p th:text="${m.menuBitter}"></p></td>
+                                <td><p th:text="${m.mType}"></p></td>
+                                <td><p th:text="${m.price}"></p></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </dt>
+            </dl>
+            <div id="pop" class="alert alert-success alert-dismissable pr " style="display: none;">
+                <a class="close" href="javascript:showDialog.hide()">×</a>
+
+                <!--/*@thymesVar id="menu" type="com.ygy.model.Menu"*/-->
+                <form role="form" action="#" th:action="@{/updatemenu1}" method="post" th:object="${menu}" enctype="multipart/form-data">
+                    <div class="form-group img_box">
+                        <input type="file" name="file" class="file"/>
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="div_table_th1">名字</th>
+                            <th>天气</th>
+                            <th>季节</th>
+                            <th>冷热</th>
+                            <th>辣度</th>
+                            <th>酸度</th>
+                            <th>甜度</th>
+                            <th>苦度</th>
+                            <th>种类</th>
+                            <th>价格</th>
+                        </tr>
+                        <tr>
+                            <td class="div_td">
+
+                                <input type="text" th:field="${menu.mName}" class="form-control" />
+
+                            </td>
+                            <td>
+
+                                <input type="text" th:field="${menu.weather}" class="form-control"  />
+
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.season}" class="form-control" />
+                            </td>
+                            <td>
+
+                                <input type="text" th:field="${menu.hotcold}" class="form-control" />
+
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.menuHot}" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.menuAcid}" class="form-control" />
+
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.menuSweet}" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.menuBitter}" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.mType}" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" th:field="${menu.price}" class="form-control" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="checkbox">
+
+                    </div> <button type="submit" class="btn btn-default btn_login">Submit</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="//ossweb-img.qq.com/images/js/milo_bundle/milo.js"></script>
+<script type="text/javascript">
+    function TGDialogS(e) {
+        // 利用milo库引入dialog组件
+        need("biz.dialog", function(Dialog) {
+            Dialog.show({
+                id: e,
+                bgcolor: '#000', //弹出“遮罩”的颜色，格式为"#FF6600"，可修改，默认为"#fff"
+                opacity: 50 //弹出“遮罩”的透明度，格式为｛10-100｝，可选
+            });
+        });
+    }
+
+    function closeDialog() {
+        // 利用milo库引入dialog组件
+        need("biz.dialog", function(Dialog) {
+            Dialog.hide();
+        });
+    }
+
+    function check() {
+        if(document.getElementById("userPassword").value !=
+            document.getElementById("userRePassword").value) {
+            document.getElementById("warning").innerHTML = "   两次密码的输入不一致";
+        } else {
+            document.getElementById("warning").innerHTML = "   ";
+        }
+    }
+</script>
+</body>
+
+</html>

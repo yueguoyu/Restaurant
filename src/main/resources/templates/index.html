@@ -37,16 +37,14 @@
         .pr{position: relative;}
         .ma{margin: 0 auto;}
         body{display: block; width: 100%;  height: 100%; background: url(http://localhost:8080/image/pic1.jpg) no-repeat;}
-        .login{display: block; width: 455px; height: 440px;  margin: 0 auto;  padding-top: 300px; }
+        .login{display: block; width: 455px; height: 440px;  margin: 0 auto;  }
         h2{display: block; margin: 0 auto; width: 100%; text-align: center; color: #ffffff;}
         .btn1{display: block; width: 100%; height: 55px; background-color: aqua;}
         .btn2{display: block; width: 100%; height: 55px; background-color: coral; margin-top: 10px; text-align: center;}
         input{ display: inline-block; background: #fff;}
-
-
         .dialog{display: block; background: beige; }
         .xiao-goLogin-box{ position: absolute; width: 150px; height: 20px; margin-top: 400px; margin-left: 320px;}
-        .dia-close{position: absolute; top: 208px; right: -47px; font-size: 50px;}
+        .dia-close{position: absolute; top: -52px; right: -47px; font-size: 50px;}
         .dia-close1{position: absolute; top: -48px; right: -47px; font-size: 50px;}
         h3{text-align: center; padding-top: 20px;}
         #warning{ position: absolute; color: red; font-size: 20px; font-weight: normal; font-style: normal; text-decoration: none;}
@@ -57,7 +55,8 @@
         .ul_list a{text-align: center; margin-top: 10px; display: block; margin: 0 auto; margin-bottom: 20px;}
         .submint{background-color: #FF7F50; text-align: center; font-size: 22px; color: #FFFF;}
         .erro_p{font-size: 15px; color: red;}
-
+        .topimg{margin-top:10px; display: block; width: 30px; height: 30px; border-radius:50%; z-index: 999; z-index: 999;}
+        .imgno{display: none;}
     </style>
 
 </head>
@@ -72,51 +71,39 @@
                         <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
                             class="icon-bar"></span>
                         <span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="#">点餐系统</a>
+                    <a class="navbar-brand" href="index.html">点餐系统</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="#" class="glyphicon glyphicon-home">Home</a>
+                            <a href="/hello" class="glyphicon glyphicon-home">Home</a>
                         </li>
                         <li>
-                            <a href="/selectOrder"  class="glyphicon glyphicon-book">Order</a>
+                            <a href="/selectOrder"  class="glyphicon glyphicon-book"  >Order</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">type<strong
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu<strong
                                     class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="essay/cate?cateName=java">java</a>
+                                    <a href="/login/upload">add</a>
                                 </li>
                                 <li>
-                                    <a href="#">js</a>
-                                </li>
-                                <li>
-                                    <a href="#">Something else here</a>
-                                </li>
-                                <li class="divider">
-                                </li>
-                                <li>
-                                    <a href="#">Separated link</a>
-                                </li>
-                                <li class="divider">
-                                </li>
-                                <li>
-                                    <a href="#">One more separated link</a>
+                                    <a href="/selectmenuPc">all</a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left"  role="search" action="/essay/dim" method="get" >
+                    <form class="navbar-form navbar-left"  role="search" action="/selectOrder/select" method="get" >
                         <div class="form-group">
-                            <input type="text"  class="form-control" name="title"/>
+                            <input type="text" placeholder="查询订单"  class="form-control" name="title"/>
                         </div>
                         <button class="btn btn-default">submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right ul1">
-                        <li>
+                        <li><img class="topimg" th:src="${topimg}" src="https://yueguoyu.oss-cn-beijing.aliyuncs.com/image/img1.png"></li>
+                        <li th:remove="${rome}">
                             <a href="javascript:TGDialogS('pop');" onClick="TGDialogS('pop')">登录</a>
                         </li>
                         <li class="pr">
@@ -179,6 +166,7 @@
             </div>
             <!--最新的博客1-->
             <div class="jumbotron">
+                <p class="erro_p" th:text="${erro1}"></p>
                 <h1 >规章制度
                 </h1>
                 <p >
@@ -203,7 +191,7 @@
 
 </div>
 
-<div id='pop'  style="display:none">
+<div id='pop'  style="display:none" >
     <a class="dia-close" href="javascript:showDialog.hide()" title="关闭">×</a>
     <div class="login">
         <h2>登录</h2>
@@ -212,10 +200,10 @@
                 <!--/*@thymesVar id="restaurant" type="com.ygy.model.Restaurant"*/-->
                 <form role="form" action="#" th:action="@{/signIn}" method="post" th:object="${restaurant}" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">账号</label><input type="text" class="form-control" th:field="${restaurant.rId}" value="账号" id="exampleInputEmail1" />
+                        <label for="exampleInputEmail1"></label><input type="text" class="form-control" th:field="${restaurant.rId}" value="账号" id="exampleInputEmail1" />
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">密码</label><input type="password" class="form-control" th:field="${restaurant.pass}" value="密码" id="exampleInputPassword1" />
+                        <label for="exampleInputPassword1"></label><input type="password" class="form-control" th:field="${restaurant.pass}" value="密码" id="exampleInputPassword1" />
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" />Check me out</label>
@@ -234,6 +222,10 @@
                 <h3 class="ma">用户注册</h3>
             </div>
             <form action="#" method="post" th:action="@{/register}"  th:object="${restaurant}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label >请上传头像：</label>
+                    <input type="file" name="file"/>
+                </div>
                 <ul class="ul_list">
                     <li>
 
@@ -256,24 +248,18 @@
 
 
                     </li>
+
                     <li>
 
 
-                        <input type="text" id="address" name="address" th:field="${restaurant.address}" placeholder="请输入餐厅地址" onblur="check()"/>
+                        <input type="text" id="rPhone" name="phone" th:field="${restaurant.rPhone}" placeholder="请输入你的联系方式" onblur="check()"/>
 
 
                     </li>
                     <li>
 
 
-                        <input type="text" id="rPhone" name="phone" th:field="${restaurant.rPhone}" placeholder="请输入餐厅联系方式" onblur="check()"/>
-
-
-                    </li>
-                    <li>
-
-
-                        <input type="text" id="time" name="time" th:field="${restaurant.time}" placeholder="请输入餐厅营业时间" onblur="check()"/>
+                        <input type="text" id="time" name="time" th:field="${restaurant.time}" placeholder="请输入上班时间" onblur="check()"/>
 
 
                     </li>

@@ -54,6 +54,10 @@ public interface MenuDao {
 
     List<Menu> selectByrid(String rid);
 
+    void deleMenuByname(String name);
+
+    Menu SelectByName(String mname);
+
 
 
 }
