@@ -57,6 +57,7 @@
         .erro_p{font-size: 15px; color: red;}
         .topimg{margin-top:10px; display: block; width: 30px; height: 30px; border-radius:50%; z-index: 999; z-index: 999;}
         .imgno{display: none;}
+        .box_img{display: block; width: 80%; margin: 0 auto;}
     </style>
 
 </head>
@@ -222,7 +223,7 @@
                 <h3 class="ma">用户注册</h3>
             </div>
             <form action="#" method="post" th:action="@{/register}"  th:object="${restaurant}" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-group box_img">
                     <label >请上传头像：</label>
                     <input type="file" name="file"/>
                 </div>

@@ -195,8 +195,6 @@ MenuDao menuDao;
     @PostMapping("/signIn")
     public  String signIn(@ModelAttribute Restaurant restaurant,Model model){
 
-
-
         try {
             Restaurant restaurant1 = restaDao.selectByid(restaurant.getrId());
             String pass=restaurant1.getPass();
@@ -287,8 +285,9 @@ MenuDao menuDao;
                 }catch (Exception e){
                     model.addAttribute("erro1","该用户已经注册");
                 }
-        model.addAttribute("topimg",newre.getAddress());
-                model.addAttribute("iftop.class",".iftop");
+//        model.addAttribute("topimg",newre.getAddress());
+//                model.addAttribute("iftop.class",".iftop");
+
         return "index";
     }
 

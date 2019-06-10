@@ -46,7 +46,7 @@ public class ScheduledTasks {
       }
     }
 //    每天的0点、13点、18点、21点都执行一次
-    @Scheduled(cron = "0 0 0,14,18,21 * * ?")
+    @Scheduled(fixedRate = 30000)
     public void selctallSched(){
         HashOperations<String,String,List<Menu>> hashOperations=redisTemplate.opsForHash();
         List<Menu> list=menuMapper.selectByrid("restaurant");

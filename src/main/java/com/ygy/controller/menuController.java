@@ -75,6 +75,8 @@ public class menuController {
             menu.setRestaId(mrid);
             menu.setMenuId(menuid);
             menu.setImgurl(url);
+        }else {
+            model.addAttribute("continue","输入不能为空");
         }
         menuDao.addMenu(menu);
         model.addAttribute("continue","请继续添加，如果添加完请关闭网页！");

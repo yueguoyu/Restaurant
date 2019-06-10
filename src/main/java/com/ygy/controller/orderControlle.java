@@ -67,15 +67,16 @@ public class orderControlle {
           for (TOrder t1:tOrderMapper.selectByOpenid(str)){
              name=name+"       "+t1.getName()+"          "+t1.getNumber();
               neworder.setOrdernumber(t1.getOrdernumber());
-            detail=detail+"         "+t1.getDetail();
+            detail=detail+"         "+t1.getDetail()+"    +      "+t1.getRemarks();
             neworder.setTime(t1.getTime());
             neworder.setId(t1.getId());
-             sum=sum+Integer.parseInt(t1.getPrice());
+              sum=sum+(Integer.parseInt(t1.getPrice())*Integer.parseInt(t1.getNumber()));
 
           }
           neworder.setName(name);
           neworder.setDetail(detail);
          neworder.setPrice(Integer.toString(sum));
+            neworder.setRemarks("");
           re.add(neworder);
         }
 //   model.addAttribute("list1",tOrderMapper.selectByTime("2019/05/22 21"))  ;
@@ -85,30 +86,89 @@ public class orderControlle {
         }catch (Exception e){
 
         }
+        Collections.sort(re,new Comparator<TOrder>(){
+            @Override
+            public int compare(TOrder o1, TOrder o2) {
+                return o2.getTime().compareTo(o1.getTime());}});
         model.addAttribute("list",re);
     return "order";
     }
     @RequestMapping("/selectOrder/select")
     public String selectOrderByorNumber(String title,Model model){
         System.out.println(title);
-       List<TOrder> re=tOrderMapper.selectByNumber(title);
+       List<TOrder> re1=tOrderMapper.selectByNumber(title);
+        Set<String> set=new HashSet<>();
+        for (TOrder t:re1){
+            set.add(t.getOrdernumber());
+        }
+        List<TOrder> re=new ArrayList<>();
+        for (String str:set){
+            TOrder neworder=new TOrder();
+            String name="";
+            String detail="";
+            int sum=0;
+            for (TOrder t1:tOrderMapper.selectByOpenid(str)){
+                name=name+"       "+t1.getName()+"          "+t1.getNumber();
+                neworder.setOrdernumber(t1.getOrdernumber());
+                detail=detail+"         "+t1.getDetail()+"      +    "+t1.getRemarks();
+                neworder.setTime(t1.getTime());
+                neworder.setId(t1.getId());
+                sum=sum+(Integer.parseInt(t1.getPrice())*Integer.parseInt(t1.getNumber()));
+
+            }
+            neworder.setName(name);
+            neworder.setDetail(detail);
+            neworder.setPrice(Integer.toString(sum));
+            re.add(neworder);
+        }
         HashOperations<String,String,Restaurant> hashOperations=redisTemplate.opsForHash();
         model.addAttribute("topimg",hashOperations.get("mysession","mysession").getAddress());
+//5.28
+        Collections.sort(re,new Comparator<TOrder>(){
+            @Override
+            public int compare(TOrder o1, TOrder o2) {
+                return o2.getTime().compareTo(o1.getTime());}});
         model.addAttribute("list",re);
         return "order";
     }
     @RequestMapping("/selectOrderAll")
     public String selectOrderall(Model model) {
         List<TOrder> list=tOrderMapper.selectAll();
+        Set<String> set=new HashSet<>();
+        for (TOrder t:list){
+            set.add(t.getOrdernumber());
+        }
+        List<TOrder> re=new ArrayList<>();
+        for (String str:set){
+            TOrder neworder=new TOrder();
+            String name="";
+            String detail="";
+            int sum=0;
+            for (TOrder t1:tOrderMapper.selectByOpenid(str)){
+                name=name+"       "+t1.getName()+"          "+t1.getNumber();
+                neworder.setOrdernumber(t1.getOrdernumber());
+                detail=detail+"         "+t1.getDetail()+"      +    "+t1.getRemarks();
+                neworder.setTime(t1.getTime());
+                neworder.setId(t1.getId());
+                sum=sum+(Integer.parseInt(t1.getPrice())*Integer.parseInt(t1.getNumber()));
+
+            }
+            neworder.setName(name);
+            neworder.setDetail(detail);
+            neworder.setPrice(Integer.toString(sum));
+            re.add(neworder);
+        }
         HashOperations<String,String,Restaurant> hashOperations=redisTemplate.opsForHash();
         try {
             model.addAttribute("topimg", hashOperations.get("mysession", "mysession").getAddress());
         }catch (Exception e){
 
         }
-        model.addAttribute("list",list);
+        Collections.sort(re,new Comparator<TOrder>(){
+                    @Override
+                    public int compare(TOrder o1, TOrder o2) {
+                        return o2.getTime().compareTo(o1.getTime());}});
+        model.addAttribute("list",re);
         return "order";
     }
-
-
 }
