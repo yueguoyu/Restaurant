@@ -17,7 +17,7 @@
 
 管理员登录界面如图4-1所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p1.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p1.png) 
 
 图4-1 管理员登录后台主页面图
 
