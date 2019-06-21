@@ -35,7 +35,7 @@
 
 餐厅管理员用户注册界面如图4-2所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p2.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p2.png) 
 
 图4-2 餐厅管理员用户注册页图
 
@@ -45,7 +45,7 @@
 
 登录后台后管理界面如图4-3所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p3.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p3.png) 
 
 图4-3 餐厅管理员管理界面图
 
@@ -65,7 +65,7 @@
 
 菜单界面如图4-4所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p4.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p4.png) 
 
 图4-4 菜单展示界面图
 
@@ -77,7 +77,7 @@
 
 餐厅管理员在登录后进入首页，可以通过首页顶部的导航栏的menu下拉框选择add按钮。当餐厅管理员点击这个按钮时，页面会跳转至菜肴增加页面。餐厅管理者可以在菜肴增加页面填写需要增加的菜肴信息，当菜肴信息填写完成时则点击提交按钮进行提交。
 
-增加菜单界面如图4-5所示。 ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p5.png)
+增加菜单界面如图4-5所示。 ![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p5.png)
 
 图4-5 增加菜单界面图
 
@@ -91,7 +91,7 @@
 
 修改菜单弹窗如图4-6所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p6.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p6.png) 
 
 图4-6 修改菜单的弹窗图
 
@@ -113,7 +113,7 @@
 
 全部订单显示页面如图4-7所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p7.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p7.png) 
 
 图4-7 全部订单显示界面图
 
@@ -127,7 +127,7 @@
 
 实时订单显示页面如图4-8所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p8.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p8.png) 
 
 图4-8 实时订单显示界面图
 
@@ -141,7 +141,7 @@
 
 根据订单号查询订单显示页面如图4-9所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p9.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p9.png) 
 
 图4-9 根据订单号查询订单显示界面图
 
@@ -153,7 +153,7 @@
 
 微信小程序首页页面如图4-10所示。
 
-                     ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p10.png)
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p10.png)
 
 图4-10 微信小程序首页图
 
@@ -169,13 +169,13 @@
 
 微信小程序菜单展示模块页面如图4-11所示。
 
-                     ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p11.png)
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p11.png)
 
 图4-11 微信小程序菜单展示页面图
 
 微信小程序点击加号后弹窗如图4-12所示。
 
-	  ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p12.png)
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p12.png)
 
 图4-12 微信小程序点击加号后弹窗图
 
@@ -193,7 +193,7 @@
 
 微信小程序购物车弹窗如图4-13所示。
 
-                       ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p13.png)
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p13.png)
 
 图4-13 购物车弹窗图
 
@@ -209,7 +209,7 @@
 
 微信小程序订单详情页面如图4-14所示。
 
-      ![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p14.png)
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p14.png)
 
 图4-14 微信小程序订单图
 
@@ -225,7 +225,7 @@
 
 微信小程序订单详情页面如图4-15所示。
 
-![img](https://yueguoyu.oss-cn-beijing.aliyuncs.com/ygy/image/p15.png) 
+![img](https://github.com/yueguoyu/Restaurant/blob/master/image/p15.png) 
 
 图4-15 微信小程序取单页面图
 
